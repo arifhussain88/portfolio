@@ -1,0 +1,84 @@
+Projects
+
+ZenTracker: Built with NativePHP, High-Performance Habit & Mood Companion
+
+Feb 2026 – Mar 2026
+
+ZenTracker is a modern wellness application developed to explore the cutting-edge NativePHP ecosystem, bringing the power of Laravel 12 natively to mobile devices. During a 2-hour rapid development sprint, I engineered a fully functional, multi-user tracking platform that prioritizes speed and sleek aesthetics.
+
+Key Technical Achievements: • Mobile Native Experience: Leveraged NativePHP/mobile to convert standard Laravel code into a high-fidelity app with zero-latency sync via Bitfrost Jump. • Modern UI/UX: Implemented a responsive Glassmorphism design using Tailwind CSS, featuring micro-animations and smooth transitions. • Performance Engineering: Built an asynchronous architecture (Fetch API) for instant, "optimistic" UI feedback on habits and mood logs. • Real-time Analytics: Developed a personalized stats engine using Chart.js to visualize weekly 7-day wellness trends. • Secure Architecture: Implemented a robust authentication layer with SQLite, ensuring complete data isolation per user.
+
+Technologies: Laravel 12, PHP 8.3, NativePHP, SQLite, Tailwind CSS, Chart.js, Fetch API.
+
+Skills: NativePHP, Laravel, +1 skill
+
+Thumbnail for https://github.com/arifhussain88/ZenTracker
+https://github.com/arifhussain88/ZenTracker
+
+ProjectCamp 
+
+May 2021 – May 2024
+
+Co-developed from scratch an internal enterprise platform to replace Teamwork, unifying production, project management, sales, billing, and client collaboration.
+Built a multi-role, role-based access system with distinct UIs for Production, PMs, Sales, Clients, and Leadership, including dashboards, CRM, invoicing, payments, and reporting.
+Independently owned the staging environment setup and CentOS → AlmaLinux migration, ensuring production parity and long-term stability.
+
+Skills: Laravel, Vue.js, +3 skills
+
+Thumbnail for Prodction Dashboard 
+Prodction Dashboard 
+
+Thumbnail for Project Dashboard 
+Project Dashboard 
+
+Thumbnail for Sales Report 
+Sales Report 
+
+Show all 8 media
+News App
+
+Jan 2024 – Jan 2024
+
+Worked with Laravel to fetch news source from famous news agencies like New York Time and The Guardian, project automatically fetches and news articles and updates database via Jobs.
+
+Skills: Laravel, Queuing, +1 skill
+
+Thumbnail for GitHub - arifhussain88/news-app
+GitHub - arifhussain88/news-app
+
+Urban Emerge
+
+Apr 2017 – Aug 2018
+
+
+Associated with PNC Solutions Pakistan 
+
+Show project
+Pulmonary Practice Associates
+
+Mar 2017 – Apr 2017
+
+Show project
+Skills: MySQL
+
+StudyPage
+
+Sep 2014 – Mar 2015
+
+Show project
+It's an online educational portal where students and teachers can interact. Students can participate in quiz created by the teachers. They can also discuss and communicate with each other via live chat and audio record feature or comment, like or dislike the posts displayed in the timeline.
+
+Skills: MySQL
+
+Other contributors
+
+View all contributors
+orcapacific.net
+
+Show project
+Skills: MySQL
+
+thenewagesource.com
+
+Show project
+Skills: WordPress, MySQL
