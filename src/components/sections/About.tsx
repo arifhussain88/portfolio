@@ -58,7 +58,7 @@ export function About() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <Image
-              src="/images/headshot.jpg"
+              src="/portfolio/images/headshot.jpg"
               alt="Arif Hussain"
               fill
               className="object-cover"
