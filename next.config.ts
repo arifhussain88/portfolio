@@ -1,10 +1,12 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  basePath: '/portfolio', 
+  basePath: isProd ? "/portfolio" : undefined,
 };
 
 export default nextConfig;
