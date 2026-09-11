@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-// const isProd = process.env.NODE_ENV === "production";
+// const isProd = process.env.NODE_ENV === "production"; // doesnt work on git
 
 const nextConfig: NextConfig = {
   images: {
