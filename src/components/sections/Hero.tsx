@@ -13,58 +13,79 @@ const HeroVisual = dynamic(
 );
 
 export function Hero() {
+  const highlights = [
+    { label: "Production Experience", value: "8+ Years" },
+    { label: "Query Optimization", value: "50s → 200ms" },
+    { label: "Concurrent Load", value: "1,500+ Users" },
+    { label: "Core Expertise", value: "Laravel · Full-Stack · AWS" },
+  ];
+
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-28 pb-20 md:pt-36 md:pb-28">
       <HeroVisual />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-6 pt-32 pb-20">
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
           className="max-w-4xl"
         >
-          <motion.p
-            variants={staggerItem}
-            className="mb-6 font-mono text-sm uppercase tracking-[0.25em] text-accent"
-          >
-            {siteConfig.location} · Open to remote
-          </motion.p>
+          {/* Status badge */}
+          <motion.div variants={staggerItem} className="mb-6 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1 text-xs font-mono font-medium text-muted shadow-xs">
+              <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+              {siteConfig.location} · Available Worldwide
+            </span>
+            <span className="hidden sm:inline-block rounded-full border border-border/80 bg-surface-elevated/60 px-3 py-1 font-mono text-xs text-muted-foreground">
+              Full-Stack Architecture & Delivery
+            </span>
+          </motion.div>
 
+          {/* Main Title */}
           <motion.h1
             variants={staggerItem}
-            className="font-display text-5xl font-bold leading-[1.05] tracking-tight md:text-7xl lg:text-8xl"
+            className="font-display text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.08]"
           >
-            <span className="gradient-text">{siteConfig.title}.</span>
+            Engineering <span className="gradient-text">resilient, scalable</span> web applications.
           </motion.h1>
 
+          {/* Tagline */}
           <motion.p
             variants={staggerItem}
             className="mt-6 max-w-2xl text-lg leading-relaxed text-muted md:text-xl"
           >
-            {siteConfig.tagline}
+            I&apos;m <span className="font-semibold text-foreground">{siteConfig.name}</span>, a{" "}
+            <span className="text-foreground font-medium">{siteConfig.title}</span> specializing in
+            end-to-end production systems — robust Laravel &amp; Node APIs, high-performance database architectures,
+            modern frontend interfaces, and automated cloud infrastructure.
           </motion.p>
 
+          {/* Tech stack badges */}
           <motion.div
             variants={staggerItem}
-            className="mt-8 flex flex-wrap gap-2"
+            className="mt-8 flex flex-wrap items-center gap-2"
           >
+            <span className="mr-2 font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Core Stack:
+            </span>
             {siteConfig.heroSkills.map((skill) => (
               <span
                 key={skill}
-                className="rounded-full border border-border bg-surface/60 px-4 py-1.5 text-sm text-muted backdrop-blur-sm transition-colors hover:border-accent/30 hover:text-foreground"
+                className="rounded-lg border border-border bg-surface px-3 py-1 font-mono text-xs font-medium text-foreground shadow-xs transition-all hover:border-accent hover:text-accent hover:-translate-y-0.5"
               >
                 {skill}
               </span>
             ))}
           </motion.div>
 
+          {/* Action buttons */}
           <motion.div
             variants={staggerItem}
-            className="mt-10 flex flex-wrap gap-4"
+            className="mt-10 flex flex-wrap items-center gap-4"
           >
             <MagneticButton href="#work" variant="primary">
-              View my work
+              Explore Selected Work
               <svg
                 width="16"
                 height="16"
@@ -75,36 +96,33 @@ export function Hero() {
                 <path
                   d="M3 8h10M9 4l4 4-4 4"
                   stroke="currentColor"
-                  strokeWidth="1.5"
+                  strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
               </svg>
             </MagneticButton>
             <MagneticButton href={siteConfig.resumePath} variant="secondary">
-              Download résumé
+              Download Résumé (PDF)
             </MagneticButton>
           </motion.div>
-        </motion.div>
 
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8, repeat: Infinity, repeatType: "reverse" }}
-        >
-          <div className="flex flex-col items-center gap-2 text-muted-foreground">
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path
-                d="M10 3v14M10 17l-4-4M10 17l4-4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+          {/* Quick Metrics Bar */}
+          <motion.div
+            variants={staggerItem}
+            className="mt-14 grid grid-cols-2 gap-4 border-t border-border pt-8 sm:grid-cols-4"
+          >
+            {highlights.map((item) => (
+              <div key={item.label} className="flex flex-col">
+                <span className="font-display text-xl font-bold text-foreground md:text-2xl">
+                  {item.value}
+                </span>
+                <span className="mt-1 text-xs font-mono text-muted-foreground">
+                  {item.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </section>

@@ -27,14 +27,14 @@ export function MagneticButton({
   const ref = useRef<HTMLAnchorElement & HTMLButtonElement>(null);
 
   const baseStyles =
-    "relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 cursor-pointer";
+    "relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 cursor-pointer select-none tracking-tight";
 
   const variants = {
     primary:
-      "bg-accent text-background hover:shadow-[0_0_30px_rgba(0,212,170,0.35)] hover:scale-[1.03]",
+      "bg-accent text-white shadow-sm hover:bg-accent-dim hover:shadow-[0_8px_25px_rgba(0,82,255,0.22)] active:scale-[0.98]",
     secondary:
-      "border border-border bg-surface-elevated text-foreground hover:border-accent/50 hover:bg-surface",
-    ghost: "text-muted hover:text-accent",
+      "border border-border bg-surface text-foreground shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:border-accent/60 hover:bg-surface-elevated hover:text-accent active:scale-[0.98]",
+    ghost: "text-muted hover:text-accent hover:bg-surface-elevated/80",
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
