@@ -18,8 +18,8 @@ export function HeroVisual() {
     if (!ctx) return;
 
     let animationId: number;
-    let mouseX = 0;
-    let mouseY = 0;
+    let mouseX = -1000;
+    let mouseY = -1000;
 
     const resize = () => {
       canvas.width = canvas.offsetWidth * window.devicePixelRatio;
@@ -30,26 +30,40 @@ export function HeroVisual() {
     resize();
     window.addEventListener("resize", resize);
 
-    const particles: Array<{
+    // Architectural node network
+    const nodes: Array<{
       x: number;
       y: number;
+      baseX: number;
+      baseY: number;
       vx: number;
       vy: number;
-      size: number;
-      opacity: number;
+      radius: number;
+      highlight: boolean;
     }> = [];
 
-    const count = Math.min(80, Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 12000));
+    const nodeSpacing = 90;
+    const cols = Math.ceil(canvas.offsetWidth / nodeSpacing) + 1;
+    const rows = Math.ceil(canvas.offsetHeight / nodeSpacing) + 1;
 
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * canvas.offsetWidth,
-        y: Math.random() * canvas.offsetHeight,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.5 + 0.1,
-      });
+    for (let c = 0; c < cols; c++) {
+      for (let r = 0; r < rows; r++) {
+        // slight jitter for organic engineering blueprint look
+        const jitterX = (Math.random() - 0.5) * 20;
+        const jitterY = (Math.random() - 0.5) * 20;
+        const x = c * nodeSpacing + jitterX;
+        const y = r * nodeSpacing + jitterY;
+        nodes.push({
+          x,
+          y,
+          baseX: x,
+          baseY: y,
+          vx: 0,
+          vy: 0,
+          radius: Math.random() > 0.88 ? 2.5 : 1.5,
+          highlight: Math.random() > 0.85,
+        });
+      }
     }
 
     const onMouseMove = (e: MouseEvent) => {
@@ -58,77 +72,74 @@ export function HeroVisual() {
       mouseY = e.clientY - rect.top;
     };
 
+    const onMouseLeave = () => {
+      mouseX = -1000;
+      mouseY = -1000;
+    };
+
     canvas.addEventListener("mousemove", onMouseMove);
+    canvas.addEventListener("mouseleave", onMouseLeave);
 
     const animate = () => {
       const w = canvas.offsetWidth;
       const h = canvas.offsetHeight;
       ctx.clearRect(0, 0, w, h);
 
-      for (const p of particles) {
-        const dx = mouseX - p.x;
-        const dy = mouseY - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        
-        // Liquid distortion based on mouse
-        if (dist < 200) {
-          p.vx -= dx * 0.0002;
-          p.vy -= dy * 0.0002;
-        } else {
-          // Slow return to normal speed
-          p.vx *= 0.99;
-          p.vy *= 0.99;
-          if (Math.abs(p.vx) < 0.2) p.vx += (Math.random() - 0.5) * 0.1;
-          if (Math.abs(p.vy) < 0.2) p.vy += (Math.random() - 0.5) * 0.1;
+      // Connect adjacent nodes
+      ctx.lineWidth = 1;
+      for (let i = 0; i < nodes.length; i++) {
+        const n1 = nodes[i];
+
+        // Spring back to base position
+        const dxBase = n1.baseX - n1.x;
+        const dyBase = n1.baseY - n1.y;
+        n1.vx += dxBase * 0.02;
+        n1.vy += dyBase * 0.02;
+
+        // Mouse proximity repulsion / displacement
+        const dxMouse = mouseX - n1.x;
+        const dyMouse = mouseY - n1.y;
+        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+        if (distMouse < 180) {
+          const force = (1 - distMouse / 180) * 8;
+          n1.vx -= (dxMouse / distMouse) * force * 0.3;
+          n1.vy -= (dyMouse / distMouse) * force * 0.3;
         }
 
-        p.x += p.vx;
-        p.y += p.vy;
+        // Dampen velocity
+        n1.vx *= 0.88;
+        n1.vy *= 0.88;
+        n1.x += n1.vx;
+        n1.y += n1.vy;
 
-        // Bounce
-        if (p.x < 0 || p.x > w) p.vx *= -1;
-        if (p.y < 0 || p.y > h) p.vy *= -1;
-      }
-
-      // Draw thick fluid connections
-      ctx.lineWidth = 1;
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
+        // Connect with neighboring nodes within threshold
+        for (let j = i + 1; j < nodes.length; j++) {
+          const n2 = nodes[j];
+          const dx = n1.x - n2.x;
+          const dy = n1.y - n2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          
-          if (dist < 160) {
+
+          if (dist < 110) {
+            const alpha = 0.12 * (1 - dist / 110);
             ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            
-            // Iridescent glow colors based on distance
-            const alpha = 0.15 * (1 - dist / 160);
-            
-            // Create gradient line
-            const grad = ctx.createLinearGradient(
-              particles[i].x, particles[i].y, 
-              particles[j].x, particles[j].y
-            );
-            grad.addColorStop(0, `rgba(139, 92, 246, ${alpha})`); // Violet
-            grad.addColorStop(1, `rgba(6, 182, 212, ${alpha})`);  // Cyan
-            
-            ctx.strokeStyle = grad;
+            ctx.moveTo(n1.x, n1.y);
+            ctx.lineTo(n2.x, n2.y);
+            ctx.strokeStyle = `rgba(0, 82, 255, ${alpha})`;
             ctx.stroke();
           }
         }
       }
 
-      // Draw floating orbs
-      for (const p of particles) {
+      // Draw nodes
+      for (const n of nodes) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size * 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(139, 92, 246, ${p.opacity * 1.5})`; // Violet glow
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = "rgba(139, 92, 246, 0.8)";
+        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
+        if (n.highlight) {
+          ctx.fillStyle = "rgba(0, 82, 255, 0.4)";
+        } else {
+          ctx.fillStyle = "rgba(100, 116, 139, 0.25)";
+        }
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
 
       animationId = requestAnimationFrame(animate);
@@ -140,28 +151,34 @@ export function HeroVisual() {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("mousemove", onMouseMove);
+      canvas.removeEventListener("mouseleave", onMouseLeave);
     };
   }, []);
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-surface-elevated/40 via-background to-background" />
+      {/* Blueprint grid background */}
+      <div className="blueprint-grid absolute inset-0 opacity-40" />
+
+      {/* Architectural soft light ambient glows */}
       <div
-        className="absolute top-1/4 left-1/4 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 mix-blend-screen blur-[120px]"
+        className="absolute top-1/4 left-1/2 h-[650px] w-[650px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-[140px]"
         style={{
-          background: "radial-gradient(circle, rgba(139,92,246,0.3) 0%, rgba(139,92,246,0) 70%)",
-          animation: "pulse 8s ease-in-out infinite alternate"
+          background:
+            "radial-gradient(circle, rgba(0,82,255,0.08) 0%, rgba(5,150,105,0.04) 50%, rgba(255,255,255,0) 80%)",
         }}
       />
       <div
-        className="absolute bottom-1/4 right-1/4 h-[800px] w-[800px] translate-x-1/4 translate-y-1/4 rounded-full opacity-30 mix-blend-screen blur-[150px]"
+        className="absolute bottom-10 right-10 h-[500px] w-[500px] rounded-full opacity-40 blur-[120px]"
         style={{
-          background: "radial-gradient(circle, rgba(6,182,212,0.2) 0%, rgba(6,182,212,0) 70%)",
+          background:
+            "radial-gradient(circle, rgba(0,82,255,0.06) 0%, rgba(255,255,255,0) 70%)",
         }}
       />
+
       <canvas
         ref={canvasRef}
-        className="pointer-events-auto absolute inset-0 h-full w-full opacity-80 mix-blend-screen"
+        className="pointer-events-auto absolute inset-0 h-full w-full"
         aria-hidden="true"
       />
     </div>

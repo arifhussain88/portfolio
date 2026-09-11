@@ -7,16 +7,23 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { staggerContainer, staggerItem } from "@/lib/motion";
 
 export function About() {
+  const pillarDetails = [
+    { title: "Build", subtitle: "Full-Stack Web Systems", desc: "Crafting end-to-end architectures from scalable Laravel/Node APIs to reactive Vue/React interfaces." },
+    { title: "Improve", subtitle: "Performance & Refactoring", desc: "Profiling slow queries, eradicating N+1 bottlenecks, and modernizing legacy codebases under load." },
+    { title: "Scale", subtitle: "Caching & Infrastructure", desc: "Deploying Redis clusters, database indexing strategies, and AWS cloud services for concurrent users." },
+    { title: "Maintain", subtitle: "Reliability & DevOps", desc: "Setting up automated CI/CD pipelines, Docker containerization, monitoring, and zero-downtime deploys." },
+  ];
+
   return (
     <section id="about" className="section-padding">
       <div className="mx-auto max-w-6xl px-6">
         <SectionHeading
-          label="About"
+          label="Engineering Philosophy"
           title="Build. Improve. Scale. Maintain."
           description={aboutContent.summary}
         />
 
-        <div className="grid items-center gap-12 md:grid-cols-[1fr_auto]">
+        <div className="grid items-start gap-12 lg:grid-cols-[1fr_320px]">
           <motion.div
             variants={staggerContainer}
             initial="hidden"
@@ -32,40 +39,65 @@ export function About() {
 
             <motion.div
               variants={staggerItem}
-              className="grid grid-cols-2 gap-4 sm:grid-cols-4"
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2"
             >
-              {aboutContent.pillars.map((pillar, i) => (
+              {pillarDetails.map((pillar, i) => (
                 <div
-                  key={pillar}
-                  className="group rounded-xl border border-border bg-surface p-4 transition-all hover:border-accent/30 hover:bg-surface-elevated"
+                  key={pillar.title}
+                  className="group rounded-xl border border-border bg-surface p-5 shadow-xs transition-all hover:border-accent hover:shadow-sm"
                 >
-                  <span className="font-mono text-xs text-accent">
-                    0{i + 1}
-                  </span>
-                  <p className="mt-2 font-display text-lg font-semibold text-foreground">
-                    {pillar}
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-xs font-bold text-accent">
+                      0{i + 1}
+                    </span>
+                    <span className="font-mono text-[11px] text-muted-foreground uppercase">
+                      Pillar
+                    </span>
+                  </div>
+                  <h3 className="mt-2 font-display text-lg font-bold text-foreground group-hover:text-accent transition-colors">
+                    {pillar.title}
+                  </h3>
+                  <p className="font-mono text-xs font-medium text-slate-500 mt-0.5">
+                    {pillar.subtitle}
+                  </p>
+                  <p className="mt-2 text-xs leading-relaxed text-muted">
+                    {pillar.desc}
                   </p>
                 </div>
               ))}
             </motion.div>
           </motion.div>
 
+          {/* Profile Card */}
           <motion.div
-            className="relative mx-auto h-48 w-48 shrink-0 overflow-hidden rounded-2xl border border-border md:h-56 md:w-56"
-            initial={{ opacity: 0, scale: 0.9 }}
+            className="flex flex-col items-center rounded-2xl border border-border bg-surface p-6 shadow-xs"
+            initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Image
-              src="/images/headshot.jpg"
-              alt="Arif Hussain"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 192px, 224px"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
+            <div className="relative h-48 w-48 overflow-hidden rounded-xl border-2 border-border shadow-xs">
+              <Image
+                src="/images/headshot.jpg"
+                alt="Arif Hussain"
+                fill
+                className="object-cover"
+                sizes="192px"
+                priority
+              />
+            </div>
+            <div className="mt-5 text-center">
+              <h4 className="font-display text-base font-bold text-foreground">
+                Arif Hussain
+              </h4>
+              <p className="font-mono text-xs text-muted-foreground mt-0.5">
+                Senior Software Engineer
+              </p>
+              <div className="mt-4 flex items-center justify-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-medium text-emerald-800">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
+                Available for Senior Roles
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
