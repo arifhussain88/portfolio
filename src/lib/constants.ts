@@ -183,6 +183,79 @@ export const projects: ProjectCaseStudy[] = [
     images: [],
   },
   {
+    id: "metafrolic-portal",
+    name: "MetaFrolicLabs Enterprise Portal",
+    period: "2023 – 2026",
+    featured: false,
+    link: "https://portal.metafroliclabs.com/login",
+    problem:
+      "Enterprise agency operations required a unified, high-security portal for internal workflows, client management, project oversight, and real-time business metrics.",
+    solution:
+      "Architected and developed an enterprise operational portal using Laravel Filament, Livewire, and Alpine.js, featuring reactive data tables, custom resource managers, and multi-role RBAC access controls.",
+    technology: [
+      "Laravel",
+      "Filament",
+      "Livewire",
+      "Alpine.js",
+      "Tailwind CSS",
+      "MySQL",
+    ],
+    result:
+      "Centralized organizational operations, streamlined team collaboration, and automated internal resource management for cross-functional teams.",
+    images: [],
+  },
+  {
+    id: "botnest-ai",
+    name: "BotNest AI Platform",
+    period: "2024 – 2025",
+    featured: false,
+    link: "https://app.botnest.ai/login",
+    problem:
+      "Businesses needed an intuitive, self-service dashboard to design, configure, train, and deploy customized AI chatbots without complex infrastructure overhead.",
+    solution:
+      "Engineered the frontend and application interface for BotNest using React and Tailwind CSS, backed by a Node.js API pipeline to support real-time bot customization, model switching, and conversation analytics.",
+    technology: [
+      "React",
+      "Tailwind CSS",
+      "Node.js",
+      "REST APIs",
+      "AI Integrations",
+    ],
+    result:
+      "Delivered a slick, responsive web application enabling users to rapidly train and embed intelligent conversational AI agents across client websites.",
+    images: [],
+  },
+  {
+    id: "kalm",
+    name: "KALM",
+    period: "2023 – 2024",
+    featured: false,
+    link: "https://kalm.pk/",
+    problem:
+      "Household service customers and technicians needed a reliable, on-demand booking platform with real-time service requests.",
+    solution:
+      "Engineered a custom PHP web platform connecting households across Karachi with verified professionals for electrical, plumbing, and maintenance services.",
+    technology: ["PHP", "MySQL", "JavaScript", "REST APIs", "CSS3"],
+    result:
+      "Delivered a dependable, high-converting service booking flow, technician dispatch, and client management backend.",
+    images: [],
+  },
+  {
+    id: "greenpeak",
+    name: "Green Peak",
+    period: "2023",
+    featured: false,
+    link: "https://greenpeak.pk/",
+    problem:
+      "Management consulting and leadership training firm required an authoritative corporate digital portal to showcase team expertise and facilitate seminar registrations.",
+    solution:
+      "Architected a custom WordPress platform with responsive layout, custom post types for corporate consulting/training programs, and seminar registration flows.",
+    technology: ["WordPress", "PHP", "MySQL", "JavaScript", "Custom Theme"],
+    result:
+      "Established a modern executive online presence and streamlined corporate training and seminar lead capture.",
+    images: [],
+  },
+  {
     id: "urban-emerge",
     name: "Urban Emerge",
     period: "Apr 2017 – Aug 2018",
