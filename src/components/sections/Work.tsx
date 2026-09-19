@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
@@ -8,7 +7,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/lib/constants";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeUp } from "@/lib/motion";
-import { getAssetPath } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -63,14 +61,14 @@ export function Work() {
       </div>
 
       {/* Horizontal Scroll Area for Featured Projects */}
-      <div ref={containerRef} className="relative h-[82vh] w-full max-h-[850px] min-h-[620px] hidden md:block">
+      <div ref={containerRef} className="relative h-[72vh] w-full max-h-[700px] min-h-[540px] hidden md:block">
         <div ref={scrollRef} className="absolute top-0 left-0 flex h-full items-center gap-10 px-[10vw]">
           {featured.map((project, index) => (
-            <div key={project.id} className="relative w-[82vw] max-w-[1050px] shrink-0">
-              <div className="rounded-2xl border border-border bg-surface p-8 h-[62vh] max-h-[640px] flex gap-8 items-center shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex-1 space-y-5 overflow-y-auto pr-2">
-                  <div>
-                    <div className="flex items-center gap-2 mb-3">
+            <div key={project.id} className="relative w-[80vw] max-w-[950px] shrink-0">
+              <div className="rounded-2xl border border-border bg-surface p-8 h-[56vh] max-h-[550px] flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+                <div>
+                  <div className="flex items-center justify-between gap-4 mb-3">
+                    <div className="flex items-center gap-2">
                       {index === 0 && (
                         <span className="rounded-full bg-accent/10 px-3 py-1 font-mono text-xs font-semibold text-accent">
                           ★ Primary Case Study
@@ -80,55 +78,16 @@ export function Work() {
                         {project.period}
                       </span>
                     </div>
-                    <h3 className="font-display text-3xl font-bold text-foreground">
-                      {project.name}
-                    </h3>
-                  </div>
 
-                  <div className="space-y-3 text-sm text-muted">
-                    <div className="rounded-xl border border-border/80 bg-surface-elevated/60 p-3.5">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-red-600 block mb-1">
-                        Problem
-                      </span>
-                      <p className="text-foreground/90">{project.problem}</p>
-                    </div>
-
-                    <div className="rounded-xl border border-border/80 bg-surface-elevated/60 p-3.5">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-accent block mb-1">
-                        Architecture &amp; Solution
-                      </span>
-                      <p className="text-foreground/90">{project.solution}</p>
-                    </div>
-
-                    <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/60 p-3.5">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-emerald-800 block mb-1">
-                        Measurable Impact
-                      </span>
-                      <p className="text-emerald-950 font-medium">{project.result}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-wrap gap-1.5 pt-2">
-                    {project.technology.map((tech) => (
-                      <span
-                        key={tech}
-                        className="rounded-md border border-border bg-surface-elevated px-2.5 py-1 font-mono text-xs text-slate-700"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {project.link && (
-                    <div className="pt-2">
+                    {project.link && (
                       <a
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-accent-dim transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:text-accent-dim transition-colors"
                       >
                         Visit Production Deployment
-                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                           <path
                             d="M3 11L11 3M11 3H5M11 3v6"
                             stroke="currentColor"
@@ -138,21 +97,47 @@ export function Work() {
                           />
                         </svg>
                       </a>
+                    )}
+                  </div>
+
+                  <h3 className="font-display text-3xl font-bold text-foreground">
+                    {project.name}
+                  </h3>
+
+                  <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div className="rounded-xl border border-border/80 bg-surface-elevated/60 p-4">
+                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-red-600 block mb-1">
+                        Problem
+                      </span>
+                      <p className="text-foreground/90 text-xs leading-relaxed">{project.problem}</p>
                     </div>
-                  )}
+
+                    <div className="rounded-xl border border-border/80 bg-surface-elevated/60 p-4">
+                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-accent block mb-1">
+                        Architecture &amp; Solution
+                      </span>
+                      <p className="text-foreground/90 text-xs leading-relaxed">{project.solution}</p>
+                    </div>
+
+                    <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/70 p-4">
+                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-emerald-800 block mb-1">
+                        Measurable Impact
+                      </span>
+                      <p className="text-emerald-950 font-medium text-xs leading-relaxed">{project.result}</p>
+                    </div>
+                  </div>
                 </div>
 
-                {project.images.length > 0 && (
-                  <div className="flex-1 relative h-full w-full rounded-xl overflow-hidden border border-border bg-slate-100 shadow-xs">
-                    <Image
-                      src={getAssetPath(project.images[0])}
-                      alt={project.name}
-                      fill
-                      className="object-cover object-top hover:scale-105 transition-transform duration-700"
-                      sizes="50vw"
-                    />
-                  </div>
-                )}
+                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border mt-4">
+                  {project.technology.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-md border border-border bg-surface-elevated px-2.5 py-1 font-mono text-xs text-slate-700"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
@@ -160,20 +145,17 @@ export function Work() {
       </div>
 
       {/* Mobile Stack for Featured Projects */}
-      <div className="md:hidden flex flex-col gap-8 px-6">
-        {featured.map((project) => (
+      <div className="md:hidden flex flex-col gap-6 px-6">
+        {featured.map((project, index) => (
           <div key={project.id} className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-            {project.images.length > 0 && (
-              <div className="relative h-48 w-full rounded-xl overflow-hidden border border-border bg-slate-100 mb-5">
-                <Image
-                  src={getAssetPath(project.images[0])}
-                  alt={project.name}
-                  fill
-                  className="object-cover object-top"
-                />
-              </div>
-            )}
-            <span className="font-mono text-xs text-muted-foreground uppercase">{project.period}</span>
+            <div className="flex items-center justify-between gap-2 mb-2">
+              {index === 0 && (
+                <span className="rounded-full bg-accent/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-accent">
+                  ★ Featured
+                </span>
+              )}
+              <span className="font-mono text-xs text-muted-foreground uppercase">{project.period}</span>
+            </div>
             <h3 className="font-display text-2xl font-bold text-foreground mt-1">{project.name}</h3>
             
             <div className="mt-4 space-y-3 text-sm">
@@ -183,7 +165,7 @@ export function Work() {
             </div>
 
             <div className="flex flex-wrap gap-1.5 mt-4">
-              {project.technology.slice(0, 5).map((tech) => (
+              {project.technology.map((tech) => (
                 <span key={tech} className="rounded bg-surface-elevated px-2 py-0.5 text-xs text-muted">
                   {tech}
                 </span>
@@ -197,7 +179,7 @@ export function Work() {
                 rel="noopener noreferrer"
                 className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
               >
-                View Live Site
+                View Live Deployment
                 <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
                   <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>

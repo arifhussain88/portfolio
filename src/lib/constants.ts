@@ -112,15 +112,7 @@ export const projects: ProjectCaseStudy[] = [
     ],
     result:
       "Unified the full operational workflow under one platform. Independently owned staging environment setup and a CentOS → AlmaLinux migration, ensuring production parity and long-term stability.",
-    images: [
-      getAssetPath("/images/projects/projectcamp-0.jpg"),
-      getAssetPath("/images/projects/projectcamp-1.jpg"),
-      getAssetPath("/images/projects/projectcamp-2.jpg"),
-      getAssetPath("/images/projects/projectcamp-3.jpg"),
-      getAssetPath("/images/projects/projectcamp-4.jpg"),
-      getAssetPath("/images/projects/projectcamp-5.jpg"),
-      getAssetPath("/images/projects/projectcamp-6.jpg"),
-    ],
+    images: [],
   },
   {
     id: "zentracker",
@@ -143,7 +135,7 @@ export const projects: ProjectCaseStudy[] = [
     ],
     result:
       "Delivered a fully functional native-feeling app in a rapid development sprint, with secure per-user data isolation and real-time analytics visualization.",
-    images: [getAssetPath("/images/projects/zentracker.jpg")],
+    images: [],
   },
   {
     id: "news-app",
@@ -278,7 +270,7 @@ export const projects: ProjectCaseStudy[] = [
     solution: "Built a customized web platform for the practice.",
     technology: ["PHP", "MySQL", "HTML5/CSS3"],
     result: "Improved patient engagement and automated scheduling.",
-    images: [getAssetPath("/images/projects/PulmonaryPracticeAssociates.png")],
+    images: [],
   },
   {
     id: "studypage",
@@ -290,7 +282,7 @@ export const projects: ProjectCaseStudy[] = [
     solution: "Created a portal where students can take quizzes, communicate via live chat, audio record features, and interact with a timeline.",
     technology: ["PHP", "MySQL", "JavaScript"],
     result: "Enabled rich interaction and media sharing between students and teachers.",
-    images: [getAssetPath("/images/projects/StudyPagepng.png")],
+    images: [],
   },
   {
     id: "orcapacific",

@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { aboutContent } from "@/lib/constants";
+import { aboutContent, siteConfig } from "@/lib/constants";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { staggerContainer, staggerItem } from "@/lib/motion";
-import { getAssetPath } from "@/lib/utils";
 
 export function About() {
   const pillarDetails = [
@@ -69,7 +67,7 @@ export function About() {
             </motion.div>
           </motion.div>
 
-          {/* Profile Card */}
+          {/* Identity & Highlights Card */}
           <motion.div
             className="flex flex-col items-center rounded-2xl border border-border bg-surface p-6 shadow-xs"
             initial={{ opacity: 0, scale: 0.95 }}
@@ -77,24 +75,33 @@ export function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="relative h-48 w-48 overflow-hidden rounded-xl border-2 border-border shadow-xs">
-              <Image
-                src={getAssetPath("/images/headshot.jpg")}
-                alt="Arif Hussain"
-                fill
-                className="object-cover"
-                sizes="192px"
-                priority
-              />
+            <div className="flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-accent via-accent-dim to-slate-900 text-white font-display text-3xl font-bold shadow-md shadow-accent/20">
+              AH
             </div>
-            <div className="mt-5 text-center">
-              <h4 className="font-display text-base font-bold text-foreground">
-                Arif Hussain
+            <div className="mt-5 text-center w-full">
+              <h4 className="font-display text-lg font-bold text-foreground">
+                {siteConfig.name}
               </h4>
               <p className="font-mono text-xs text-muted-foreground mt-0.5">
-                Senior Software Engineer
+                {siteConfig.title}
               </p>
-              <div className="mt-4 flex items-center justify-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-medium text-emerald-800">
+
+              <div className="mt-5 space-y-2 border-t border-border pt-4 text-left text-xs font-mono text-muted">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Experience:</span>
+                  <span className="font-semibold text-foreground">8+ Years</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Focus:</span>
+                  <span className="font-semibold text-foreground">Full-Stack / Core</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Location:</span>
+                  <span className="font-semibold text-foreground">Karachi (Remote)</span>
+                </div>
+              </div>
+
+              <div className="mt-5 flex items-center justify-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[11px] font-medium text-emerald-800">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-600" />
                 Available for Senior Roles
               </div>
