@@ -1,12 +1,19 @@
 import type { NextConfig } from "next";
 
-// const isProd = process.env.NODE_ENV === "production"; // doesnt work on git
+const isProd = process.env.NODE_ENV === "production";
+const basePath = isProd ? "/portfolio" : "";
 
 const nextConfig: NextConfig = {
+  output: "export",
+  basePath: basePath,
+  assetPrefix: basePath ? `${basePath}/` : undefined,
   images: {
-    formats: ["image/avif", "image/webp"],
+    unoptimized: true,
   },
-  basePath: "/portfolio",
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
 };
 
 export default nextConfig;
+

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { DM_Sans, Syne } from "next/font/google";
+import { DM_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import { CustomCursor } from "@/components/effects/CustomCursor";
 import "./globals.css";
 
-const syne = Syne({
+const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  variable: "--font-syne",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -43,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${plusJakarta.variable} ${dmSans.variable}`}>
       <body className="antialiased">
         <CustomCursor />
         <div className="noise-overlay" aria-hidden="true" />

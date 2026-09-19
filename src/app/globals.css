@@ -16,7 +16,7 @@
   --color-accent-tertiary: #d97706; /* Amber */
   --color-metric-from: #dc2626; /* Coral / Alert */
   --color-metric-to: #059669; /* Fast Emerald */
-  --font-display: var(--font-syne);
+  --font-display: var(--font-display);
   --font-body: var(--font-dm-sans);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;

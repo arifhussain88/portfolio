@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { aboutContent } from "@/lib/constants";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { staggerContainer, staggerItem } from "@/lib/motion";
+import { getAssetPath } from "@/lib/utils";
 
 export function About() {
   const pillarDetails = [
@@ -78,7 +79,7 @@ export function About() {
           >
             <div className="relative h-48 w-48 overflow-hidden rounded-xl border-2 border-border shadow-xs">
               <Image
-                src="/images/headshot.jpg"
+                src={getAssetPath("/images/headshot.jpg")}
                 alt="Arif Hussain"
                 fill
                 className="object-cover"

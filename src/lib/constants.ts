@@ -1,4 +1,5 @@
 import type { ExperienceEntry, ProjectCaseStudy, SkillGroup } from "@/lib/types";
+import { getAssetPath } from "@/lib/utils";
 
 export const siteConfig = {
   name: "Arif Hussain",
@@ -11,7 +12,7 @@ export const siteConfig = {
   phone: "+92-308-9130079",
   linkedin: "https://linkedin.com/in/sayed-arifhussain",
   github: "https://github.com/arifhussain88",
-  resumePath: "/resume/arif-hussain-resume.pdf",
+  resumePath: getAssetPath("/resume/arif-hussain-resume.pdf"),
   formspreeId: process.env.NEXT_PUBLIC_FORMSPREE_ID ?? "moeapqdo",
 };
 
@@ -112,13 +113,13 @@ export const projects: ProjectCaseStudy[] = [
     result:
       "Unified the full operational workflow under one platform. Independently owned staging environment setup and a CentOS → AlmaLinux migration, ensuring production parity and long-term stability.",
     images: [
-      "/images/projects/projectcamp-0.jpg",
-      "/images/projects/projectcamp-1.jpg",
-      "/images/projects/projectcamp-2.jpg",
-      "/images/projects/projectcamp-3.jpg",
-      "/images/projects/projectcamp-4.jpg",
-      "/images/projects/projectcamp-5.jpg",
-      "/images/projects/projectcamp-6.jpg",
+      getAssetPath("/images/projects/projectcamp-0.jpg"),
+      getAssetPath("/images/projects/projectcamp-1.jpg"),
+      getAssetPath("/images/projects/projectcamp-2.jpg"),
+      getAssetPath("/images/projects/projectcamp-3.jpg"),
+      getAssetPath("/images/projects/projectcamp-4.jpg"),
+      getAssetPath("/images/projects/projectcamp-5.jpg"),
+      getAssetPath("/images/projects/projectcamp-6.jpg"),
     ],
   },
   {
@@ -142,7 +143,7 @@ export const projects: ProjectCaseStudy[] = [
     ],
     result:
       "Delivered a fully functional native-feeling app in a rapid development sprint, with secure per-user data isolation and real-time analytics visualization.",
-    images: ["/images/projects/zentracker.jpg"],
+    images: [getAssetPath("/images/projects/zentracker.jpg")],
   },
   {
     id: "news-app",
@@ -277,7 +278,7 @@ export const projects: ProjectCaseStudy[] = [
     solution: "Built a customized web platform for the practice.",
     technology: ["PHP", "MySQL", "HTML5/CSS3"],
     result: "Improved patient engagement and automated scheduling.",
-    images: ["/images/projects/PulmonaryPracticeAssociates.png"],
+    images: [getAssetPath("/images/projects/PulmonaryPracticeAssociates.png")],
   },
   {
     id: "studypage",
@@ -289,7 +290,7 @@ export const projects: ProjectCaseStudy[] = [
     solution: "Created a portal where students can take quizzes, communicate via live chat, audio record features, and interact with a timeline.",
     technology: ["PHP", "MySQL", "JavaScript"],
     result: "Enabled rich interaction and media sharing between students and teachers.",
-    images: ["/images/projects/StudyPagepng.png"],
+    images: [getAssetPath("/images/projects/StudyPagepng.png")],
   },
   {
     id: "orcapacific",

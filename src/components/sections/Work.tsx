@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/lib/constants";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { fadeUp } from "@/lib/motion";
+import { getAssetPath } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -144,7 +145,7 @@ export function Work() {
                 {project.images.length > 0 && (
                   <div className="flex-1 relative h-full w-full rounded-xl overflow-hidden border border-border bg-slate-100 shadow-xs">
                     <Image
-                      src={project.images[0]}
+                      src={getAssetPath(project.images[0])}
                       alt={project.name}
                       fill
                       className="object-cover object-top hover:scale-105 transition-transform duration-700"
@@ -165,7 +166,7 @@ export function Work() {
             {project.images.length > 0 && (
               <div className="relative h-48 w-full rounded-xl overflow-hidden border border-border bg-slate-100 mb-5">
                 <Image
-                  src={project.images[0]}
+                  src={getAssetPath(project.images[0])}
                   alt={project.name}
                   fill
                   className="object-cover object-top"

@@ -45,9 +45,9 @@ export function Hero() {
           {/* Main Title */}
           <motion.h1
             variants={staggerItem}
-            className="font-display text-4xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.08]"
+            className="font-display text-4xl font-bold tracking-[-0.03em] text-foreground sm:text-6xl md:text-7xl lg:text-[4.75rem] leading-[1.14]"
           >
-            Engineering <span className="gradient-text">resilient, scalable</span> web applications.
+            Engineering <span className="gradient-text font-extrabold">resilient, scalable</span> web applications.
           </motion.h1>
 
           {/* Tagline */}
