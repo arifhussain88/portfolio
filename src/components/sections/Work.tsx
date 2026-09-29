@@ -1,266 +1,192 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { projects } from "@/lib/constants";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { fadeUp } from "@/lib/motion";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { projects, sideProjects } from "@/lib/constants";
+import type { Project } from "@/lib/types";
 
-gsap.registerPlugin(ScrollTrigger);
+const ease = [0.16, 1, 0.3, 1] as const;
 
-export function Work() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const featured = projects.filter((p) => p.featured);
-  const others = projects.filter((p) => !p.featured);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion || !containerRef.current || !scrollRef.current) return;
-
-    const timer = setTimeout(() => {
-      const scrollElement = scrollRef.current;
-      if (!scrollElement) return;
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          pin: true,
-          scrub: 1,
-          start: "top 12%",
-          end: () => `+=${scrollElement.scrollWidth - window.innerWidth}`,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      tl.to(scrollElement, {
-        x: () => -(scrollElement.scrollWidth - window.innerWidth + 120),
-        ease: "none",
-      });
-
-      return () => {
-        tl.kill();
-        ScrollTrigger.getAll().forEach((t) => t.kill());
-      };
-    }, 120);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+function ProjectBody({
+  project,
+  showTech = true,
+}: {
+  project: Project;
+  showTech?: boolean;
+}) {
   return (
-    <section id="work" className="section-padding overflow-hidden">
-      <div className="mx-auto max-w-6xl px-6 mb-12">
-        <SectionHeading
-          label="Production Case Studies"
-          title="Selected Engineering Work"
-          description="High-scale applications, enterprise CRMs, and APIs delivered for production environments."
-        />
-      </div>
-
-      {/* Horizontal Scroll Area for Featured Projects */}
-      <div ref={containerRef} className="relative h-[72vh] w-full max-h-[700px] min-h-[540px] hidden md:block">
-        <div ref={scrollRef} className="absolute top-0 left-0 flex h-full items-center gap-10 px-[10vw]">
-          {featured.map((project, index) => (
-            <div key={project.id} className="relative w-[80vw] max-w-[950px] shrink-0">
-              <div className="rounded-2xl border border-border bg-surface p-8 h-[56vh] max-h-[550px] flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
-                <div>
-                  <div className="flex items-center justify-between gap-4 mb-3">
-                    <div className="flex items-center gap-2">
-                      {index === 0 && (
-                        <span className="rounded-full bg-accent/10 px-3 py-1 font-mono text-xs font-semibold text-accent">
-                          ★ Primary Case Study
-                        </span>
-                      )}
-                      <span className="font-mono text-xs text-muted-foreground uppercase tracking-wider">
-                        {project.period}
-                      </span>
-                    </div>
-
-                    {project.link && (
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:text-accent-dim transition-colors"
-                      >
-                        Visit Production Deployment
-                        <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                          <path
-                            d="M3 11L11 3M11 3H5M11 3v6"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </a>
-                    )}
-                  </div>
-
-                  <h3 className="font-display text-3xl font-bold text-foreground">
-                    {project.name}
-                  </h3>
-
-                  <div className="mt-5 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                    <div className="rounded-xl border border-border/80 bg-surface-elevated/60 p-4">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-red-600 block mb-1">
-                        Problem
-                      </span>
-                      <p className="text-foreground/90 text-xs leading-relaxed">{project.problem}</p>
-                    </div>
-
-                    <div className="rounded-xl border border-border/80 bg-surface-elevated/60 p-4">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-accent block mb-1">
-                        Architecture &amp; Solution
-                      </span>
-                      <p className="text-foreground/90 text-xs leading-relaxed">{project.solution}</p>
-                    </div>
-
-                    <div className="rounded-xl border border-emerald-200/80 bg-emerald-50/70 p-4">
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-emerald-800 block mb-1">
-                        Measurable Impact
-                      </span>
-                      <p className="text-emerald-950 font-medium text-xs leading-relaxed">{project.result}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 pt-4 border-t border-border mt-4">
-                  {project.technology.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-md border border-border bg-surface-elevated px-2.5 py-1 font-mono text-xs text-slate-700"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Mobile Stack for Featured Projects */}
-      <div className="md:hidden flex flex-col gap-6 px-6">
-        {featured.map((project, index) => (
-          <div key={project.id} className="rounded-2xl border border-border bg-surface p-6 shadow-sm">
-            <div className="flex items-center justify-between gap-2 mb-2">
-              {index === 0 && (
-                <span className="rounded-full bg-accent/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-accent">
-                  ★ Featured
-                </span>
-              )}
-              <span className="font-mono text-xs text-muted-foreground uppercase">{project.period}</span>
-            </div>
-            <h3 className="font-display text-2xl font-bold text-foreground mt-1">{project.name}</h3>
-            
-            <div className="mt-4 space-y-3 text-sm">
-              <p><strong className="text-red-600 font-mono text-xs">Problem:</strong> {project.problem}</p>
-              <p><strong className="text-accent font-mono text-xs">Solution:</strong> {project.solution}</p>
-              <p className="rounded-lg bg-emerald-50 p-2 text-emerald-900"><strong className="text-emerald-800 font-mono text-xs">Impact:</strong> {project.result}</p>
-            </div>
-
-            <div className="flex flex-wrap gap-1.5 mt-4">
-              {project.technology.map((tech) => (
-                <span key={tech} className="rounded bg-surface-elevated px-2 py-0.5 text-xs text-muted">
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            {project.link && (
+    <div className="grid gap-6 pb-8 md:grid-cols-[minmax(0,40rem)_16rem] md:gap-12 md:pb-10">
+      <p className="text-lg leading-relaxed text-foreground">{project.detail}</p>
+      <div>
+        {showTech && (
+          <p className="text-sm leading-relaxed text-muted">
+            {project.technology.join(" · ")}
+          </p>
+        )}
+        {project.links.length > 0 && (
+          <div className={`flex flex-col items-start gap-2 ${showTech ? "mt-4" : ""}`}>
+            {project.links.map((link) => (
               <a
-                href={project.link}
+                key={link.href}
+                href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
+                className="link"
               >
-                View Live Deployment
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                  <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                {link.label}
               </a>
-            )}
+            ))}
           </div>
-        ))}
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function Work() {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const reduce = useReducedMotion();
+  const [featured, ...rest] = projects;
+
+  return (
+    <section id="work" className="page-wrap py-24 md:py-32">
+      <div className="max-w-2xl">
+        <h2 className="font-display text-4xl font-medium tracking-tight text-foreground md:text-5xl">
+          Selected work
+        </h2>
+        <p className="mt-4 text-lg leading-relaxed text-muted">
+          The newest is a shop. The others are systems a company runs every day.
+        </p>
       </div>
 
-      {/* Other Projects Grid */}
-      <div className="mx-auto max-w-6xl px-6 mt-24">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h3 className="font-display text-2xl font-bold text-foreground md:text-3xl">
-              Additional Production Systems
-            </h3>
-            <p className="text-sm text-muted mt-1">
-              Diverse SaaS platforms, CRM backends, APIs, and client portals.
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {others.map((project, i) => (
-            <motion.div
-              key={project.id}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: i * 0.08 }}
-              className="group flex flex-col justify-between rounded-2xl border border-border bg-surface p-6 shadow-xs transition-all hover:border-accent hover:shadow-sm hover:-translate-y-1"
+      {featured && (
+        <article className="mt-14 border-t border-foreground pt-8 md:mt-20 md:pt-10">
+          <h3>
+            <button
+              type="button"
+              className="group w-full cursor-pointer text-left"
+              aria-expanded={openId === featured.id}
+              aria-controls={`${featured.id}-detail`}
+              onClick={() => setOpenId(openId === featured.id ? null : featured.id)}
             >
-              <div>
-                <div className="flex justify-between items-center mb-3">
-                  <div className="h-9 w-9 rounded-xl bg-accent/10 flex items-center justify-center text-accent">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-                      <line x1="8" y1="21" x2="16" y2="21" />
-                      <line x1="12" y1="17" x2="12" y2="21" />
-                    </svg>
-                  </div>
-                  <span className="font-mono text-xs text-muted-foreground">
-                    {project.period}
+              <span className="flex items-baseline justify-between gap-4 text-sm text-muted">
+                <span className="font-display text-base italic">01</span>
+                <span>{featured.period}</span>
+              </span>
+              <span className="mt-3 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
+                <span className="font-display text-[clamp(3.25rem,8vw,6.25rem)] leading-[0.92] font-medium tracking-[-0.03em] text-foreground transition-colors duration-300 group-hover:text-accent">
+                  {featured.name}
+                </span>
+                <span className="mb-2 shrink-0 text-sm text-accent">
+                  {openId === featured.id ? "Close" : "Read"}
+                </span>
+              </span>
+              <span className="reading mt-5 block text-xl leading-snug text-foreground">
+                {featured.summary}
+              </span>
+            </button>
+          </h3>
+          <p className="mt-4 text-sm text-muted">{featured.technology.join(" · ")}</p>
+          <AnimatePresence initial={false}>
+            {openId === featured.id && (
+              <motion.div
+                id={`${featured.id}-detail`}
+                key={featured.id}
+                initial={reduce ? false : { height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                transition={{ duration: 0.45, ease }}
+                className="overflow-hidden"
+              >
+                <div className="pt-8">
+                  <ProjectBody project={featured} showTech={false} />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </article>
+      )}
+
+      <div className="mt-6 border-t border-border">
+        {rest.map((project, index) => {
+          const open = openId === project.id;
+          const number = String(index + 2).padStart(2, "0");
+
+          return (
+            <article key={project.id} className="border-b border-border">
+              <h3>
+                <button
+                  type="button"
+                  className="group w-full cursor-pointer py-7 text-left md:py-8"
+                  aria-expanded={open}
+                  aria-controls={`${project.id}-detail`}
+                  onClick={() => setOpenId(open ? null : project.id)}
+                >
+                  <span className="flex items-baseline justify-between gap-4 text-sm text-muted">
+                    <span className="font-display italic">{number}</span>
+                    <span>{project.period}</span>
                   </span>
-                </div>
-
-                <h4 className="font-display text-lg font-bold text-foreground mb-2 group-hover:text-accent transition-colors">
-                  {project.name}
-                </h4>
-                <p className="text-xs text-muted leading-relaxed line-clamp-3 mb-4">
-                  {project.solution}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.technology.map((tech) => (
-                    <span key={tech} className="text-[11px] font-mono text-slate-600 bg-surface-elevated px-2 py-0.5 rounded">
-                      {tech}
+                  <span className="mt-2 flex items-end justify-between gap-4">
+                    <span className="font-display text-3xl font-medium tracking-tight text-foreground transition-colors duration-300 group-hover:text-accent md:text-4xl">
+                      {project.name}
                     </span>
-                  ))}
-                </div>
-              </div>
-
-              {project.link && (
-                <div className="border-t border-border pt-3 mt-auto">
-                  <a
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:text-accent-dim transition-colors"
+                    <span className="shrink-0 text-sm text-accent">
+                      {open ? "Close" : "Read"}
+                    </span>
+                  </span>
+                  <span className="reading mt-2 block text-lg leading-snug text-foreground">
+                    {project.summary}
+                  </span>
+                </button>
+              </h3>
+              <AnimatePresence initial={false}>
+                {open && (
+                  <motion.div
+                    id={`${project.id}-detail`}
+                    key={project.id}
+                    initial={reduce ? false : { height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                    transition={{ duration: 0.45, ease }}
+                    className="overflow-hidden"
                   >
-                    View Project
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none">
-                      <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
-                </div>
-              )}
-            </motion.div>
+                    <ProjectBody project={project} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </article>
+          );
+        })}
+      </div>
+
+      <div className="mt-16 md:mt-24">
+        <h3 className="font-display text-2xl font-medium italic text-foreground">
+          Smaller pieces
+        </h3>
+        <ul className="mt-6 border-t border-border">
+          {sideProjects.map((project) => (
+            <li key={project.id} className="border-b border-border py-4">
+              <div className="grid gap-1 sm:grid-cols-[7.5rem_minmax(0,1fr)] sm:gap-8">
+                <span className="text-sm text-muted">{project.period}</span>
+                <p className="text-lg leading-snug">
+                  {project.href ? (
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="link"
+                    >
+                      {project.name}
+                    </a>
+                  ) : (
+                    <span>{project.name}</span>
+                  )}
+                  <span className="text-muted"> — {project.summary}</span>
+                </p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

@@ -1,27 +1,43 @@
-export type SkillGroup = {
-  id: string;
+export type ProjectLink = {
   label: string;
-  highlight: string[];
-  items: string[];
+  href: string;
 };
 
-export type ProjectCaseStudy = {
+export type ProjectMetric = {
+  before: string;
+  after: string;
+  label: string;
+};
+
+export type Project = {
   id: string;
   name: string;
   period: string;
-  featured: boolean;
-  link: string | null;
-  problem: string;
-  solution: string;
+  summary: string;
+  detail: string;
   technology: string[];
-  result: string;
-  images: string[];
+  links: ProjectLink[];
+  metric?: ProjectMetric;
+};
+
+export type SideProject = {
+  id: string;
+  name: string;
+  period: string;
+  summary: string;
+  href: string | null;
+};
+
+export type ExperienceRole = {
+  role: string;
+  period: string;
+  story: string;
 };
 
 export type ExperienceEntry = {
   company: string;
-  role: string;
   location: string;
-  period: string;
-  highlights: string[];
+  years: string;
+  summary: string;
+  roles: ExperienceRole[];
 };

@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { motion } from "framer-motion";
 import { siteConfig } from "@/lib/constants";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { MagneticButton } from "@/components/ui/MagneticButton";
-import { fadeUp } from "@/lib/motion";
 
 type FormState = "idle" | "submitting" | "success" | "error";
+
+const fieldClass =
+  "mt-2 w-full border-0 border-b border-border bg-transparent px-0 py-2 text-lg text-foreground placeholder:text-muted-foreground focus:border-foreground focus:outline-none";
 
 export function Contact() {
   const [formState, setFormState] = useState<FormState>("idle");
@@ -21,9 +20,7 @@ export function Contact() {
 
     if (!formspreeConfigured) {
       setFormState("error");
-      setErrorMessage(
-        "Contact form not configured yet. Add NEXT_PUBLIC_FORMSPREE_ID to .env.local",
-      );
+      setErrorMessage("The form is not set up yet. Email is the direct way.");
       return;
     }
 
@@ -53,208 +50,124 @@ export function Contact() {
       }
     } catch {
       setFormState("error");
-      setErrorMessage("Network error. Please try again or email directly.");
+      setErrorMessage("Network error. Please try again, or email directly.");
     }
   };
 
-  const contactLinks = [
+  const secondary = [
     {
-      label: "Email",
-      value: siteConfig.email,
-      href: `mailto:${siteConfig.email}`,
-      desc: "Fastest response for engineering inquiries",
-    },
-    {
-      label: "Phone / WhatsApp",
+      label: "Phone",
       value: siteConfig.phone,
-      href: `tel:${siteConfig.phone.replace(/\s/g, "")}`,
-      desc: "Direct voice / message availability",
+      href: `tel:${siteConfig.phone.replace(/[^\d+]/g, "")}`,
+      external: false,
     },
     {
       label: "LinkedIn",
-      value: "sayed-arifhussain",
+      value: "LinkedIn",
       href: siteConfig.linkedin,
-      desc: "Professional background & endorsements",
+      external: true,
     },
     {
       label: "GitHub",
-      value: "arifhussain88",
+      value: "GitHub",
       href: siteConfig.github,
-      desc: "Open source contributions & repositories",
+      external: true,
+    },
+    {
+      label: "Résumé",
+      value: "Résumé",
+      href: siteConfig.resumePath,
+      external: false,
     },
   ];
 
   return (
-    <section id="contact" className="section-padding">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading
-          label="Direct Communication"
-          title="Let's Build Something High-Impact"
-          description="Open to senior full-stack engineering roles, systems architecture consulting, and technical leadership."
-        />
+    <section id="contact" className="page-wrap py-24 md:py-32">
+      <p className="text-sm text-muted">Write</p>
+      <h2 className="mt-4 max-w-full font-display text-[clamp(1.7rem,7vw,3.75rem)] leading-[1.15] font-medium tracking-tight break-words text-foreground">
+        <a href={`mailto:${siteConfig.email}`} className="link decoration-accent/30">
+          {siteConfig.email}
+        </a>
+      </h2>
+      <p className="reading mt-6 text-lg leading-relaxed text-foreground">
+        A short note is enough. I reply by email.
+      </p>
 
-        <div className="grid gap-10 lg:grid-cols-[1fr_420px]">
-          {/* Form */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="rounded-2xl border border-border bg-surface p-8 shadow-xs"
-          >
-            <h3 className="font-display text-xl font-bold text-foreground mb-6">
-              Send a Message
-            </h3>
+      <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
+        {secondary.map((link) => (
+          <li key={link.label}>
+            <a
+              href={link.href}
+              {...(link.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+              className="link"
+            >
+              {link.value}
+            </a>
+          </li>
+        ))}
+      </ul>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block font-mono text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5"
-                >
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  placeholder="e.g. Sarah Jenkins"
-                  className="w-full rounded-xl border border-border bg-surface-elevated/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 transition-colors focus:border-accent focus:bg-surface focus:outline-none focus:ring-2 focus:ring-accent/20"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block font-mono text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5"
-                >
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  placeholder="e.g. sarah@company.com"
-                  className="w-full rounded-xl border border-border bg-surface-elevated/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 transition-colors focus:border-accent focus:bg-surface focus:outline-none focus:ring-2 focus:ring-accent/20"
-                />
-              </div>
-
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block font-mono text-xs font-semibold uppercase tracking-wider text-foreground mb-1.5"
-                >
-                  Project or Opportunity Details
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={5}
-                  placeholder="Tell me about your tech stack, system requirements, or open role..."
-                  className="w-full rounded-xl border border-border bg-surface-elevated/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 transition-colors focus:border-accent focus:bg-surface focus:outline-none focus:ring-2 focus:ring-accent/20"
-                />
-              </div>
-
-              {formState === "success" && (
-                <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-900">
-                  <p className="font-semibold">Message sent successfully!</p>
-                  <p className="mt-0.5 text-xs">Thank you for reaching out. I will respond to your email promptly.</p>
-                </div>
-              )}
-
-              {formState === "error" && (
-                <div className="rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-900">
-                  <p className="font-semibold">Unable to submit form</p>
-                  <p className="mt-0.5 text-xs">{errorMessage}</p>
-                </div>
-              )}
-
-              <MagneticButton
-                type="submit"
-                variant="primary"
-                disabled={formState === "submitting"}
-                className="w-full sm:w-auto"
-              >
-                {formState === "submitting" ? "Sending..." : "Submit Message"}
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M3 8h10M9 4l4 4-4 4"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </MagneticButton>
-            </form>
-          </motion.div>
-
-          {/* Direct channels */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col gap-4"
-          >
-            <div className="rounded-2xl border border-border bg-surface p-6 shadow-xs">
-              <h3 className="font-display text-base font-bold text-foreground mb-4">
-                Direct Channels
-              </h3>
-              <div className="space-y-4">
-                {contactLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={link.label.includes("Email") || link.label.includes("Phone") ? undefined : "_blank"}
-                    rel="noopener noreferrer"
-                    className="group block rounded-xl border border-border/80 bg-surface-elevated/40 p-3.5 transition-all hover:border-accent hover:bg-surface hover:shadow-xs"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold text-accent">
-                        {link.label}
-                      </span>
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        className="text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
-                      >
-                        <path d="M3 11L11 3M11 3H5M11 3v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                    <p className="mt-1 font-mono text-sm font-semibold text-foreground">
-                      {link.value}
-                    </p>
-                    <p className="text-[11px] text-muted mt-0.5">
-                      {link.desc}
-                    </p>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-5">
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
-                </span>
-                <span className="font-mono text-xs font-bold text-emerald-900">
-                  Global Availability
-                </span>
-              </div>
-              <p className="mt-1.5 text-xs text-emerald-800 leading-relaxed">
-                Available for full-time remote roles, consulting sprints, and technical advisory across US, UK, European, and Gulf time zones.
-              </p>
-            </div>
-          </motion.div>
+      <form onSubmit={handleSubmit} className="mt-16 max-w-xl space-y-8">
+        <div>
+          <label htmlFor="name" className="text-sm text-muted">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            autoComplete="name"
+            className={fieldClass}
+          />
         </div>
-      </div>
+
+        <div>
+          <label htmlFor="email" className="text-sm text-muted">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autoComplete="email"
+            className={fieldClass}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="message" className="text-sm text-muted">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows={5}
+            className={fieldClass}
+          />
+        </div>
+
+        <div aria-live="polite">
+          {formState === "success" && (
+            <p className="text-base text-foreground">Sent. I will reply by email.</p>
+          )}
+          {formState === "error" && (
+            <p className="text-base text-foreground">{errorMessage}</p>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          disabled={formState === "submitting"}
+          className="cursor-pointer bg-foreground px-6 py-3 text-sm text-background transition-colors duration-200 hover:bg-accent disabled:cursor-wait disabled:opacity-60"
+        >
+          {formState === "submitting" ? "Sending" : "Send the note"}
+        </button>
+      </form>
     </section>
   );
 }

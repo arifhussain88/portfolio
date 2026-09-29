@@ -1,119 +1,93 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { experience } from "@/lib/constants";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 
-gsap.registerPlugin(ScrollTrigger);
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export function Experience() {
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const lineRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-
-    if (prefersReducedMotion || !timelineRef.current || !lineRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.from(lineRef.current, {
-        scrollTrigger: {
-          trigger: timelineRef.current,
-          start: "top 75%",
-          end: "bottom 65%",
-          scrub: 1,
-        },
-        scaleY: 0,
-        transformOrigin: "top",
-      });
-
-      const items = timelineRef.current?.querySelectorAll("[data-timeline-item]");
-      items?.forEach((item) => {
-        gsap.from(item, {
-          scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          },
-          opacity: 0,
-          y: 20,
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      });
-    }, timelineRef);
-
-    return () => ctx.revert();
-  }, []);
+  const [openCompany, setOpenCompany] = useState<string | null>(null);
+  const reduce = useReducedMotion();
 
   return (
-    <section id="experience" className="section-padding bg-surface/50 border-y border-border">
-      <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading
-          label="Career Progression"
-          title="Production Leadership & Architecture"
-          description="Track record of leading technical initiatives, modernizing legacy systems, and delivering business-critical software."
-        />
+    <section id="experience" className="border-t border-border">
+      <div className="page-wrap py-24 md:py-32">
+        <div className="max-w-2xl">
+          <h2 className="font-display text-4xl font-medium tracking-tight text-foreground md:text-5xl">
+            Experience
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-muted">
+            Three companies. Open a name for what the job actually was.
+          </p>
+        </div>
 
-        <div ref={timelineRef} className="relative mt-16 max-w-4xl mx-auto">
-          {/* Vertical Timeline Guide Line */}
-          <div
-            ref={lineRef}
-            className="absolute top-0 left-6 h-full w-[2px] bg-gradient-to-b from-accent via-slate-300 to-transparent md:left-8"
-            aria-hidden="true"
-          />
+        <div className="mt-12 border-t border-border">
+          {experience.map((entry) => {
+            const open = openCompany === entry.company;
+            const panelId = `${entry.company.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-story`;
 
-          <div className="space-y-10">
-            {experience.map((entry) => (
-              <div
-                key={`${entry.company}-${entry.period}`}
-                data-timeline-item
-                className="relative pl-16 md:pl-20"
-              >
-                {/* Timeline node */}
-                <div className="absolute left-[17px] top-6 z-10 flex h-4 w-4 items-center justify-center rounded-full bg-white ring-4 ring-accent/20 md:left-[25px]">
-                  <div className="h-2.5 w-2.5 rounded-full bg-accent" />
-                </div>
-
-                {/* Experience Card */}
-                <div className="rounded-2xl border border-border bg-surface p-7 shadow-xs transition-all hover:border-accent/40 hover:shadow-sm">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-border pb-4">
-                    <div>
-                      <span className="font-mono text-xs font-semibold text-accent uppercase tracking-wider">
-                        {entry.role}
-                      </span>
-                      <h3 className="font-display text-xl font-bold text-foreground mt-0.5">
+            return (
+              <article key={entry.company} className="border-b border-border">
+                <h3>
+                  <button
+                    type="button"
+                    className="group w-full cursor-pointer py-7 text-left md:py-8"
+                    aria-expanded={open}
+                    aria-controls={panelId}
+                    onClick={() => setOpenCompany(open ? null : entry.company)}
+                  >
+                    <span className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between md:gap-10">
+                      <span className="font-display text-3xl font-medium tracking-tight text-foreground transition-colors duration-300 group-hover:text-accent md:text-4xl">
                         {entry.company}
-                      </h3>
-                    </div>
-                    <div className="flex flex-col sm:items-end">
-                      <span className="rounded-full bg-surface-elevated px-3 py-1 font-mono text-xs font-medium text-slate-700">
-                        {entry.period}
                       </span>
-                      {entry.location && (
-                        <span className="text-[11px] font-mono text-muted-foreground mt-1">
-                          {entry.location}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                      <span className="shrink-0 text-sm text-muted">{entry.years}</span>
+                    </span>
+                    <span className="mt-2 flex items-baseline justify-between gap-4">
+                      <span className="reading text-lg leading-snug text-foreground">
+                        {entry.summary}
+                      </span>
+                      <span className="shrink-0 text-sm text-accent">
+                        {open ? "Close" : "Read"}
+                      </span>
+                    </span>
+                    <span className="mt-2 block text-sm text-muted">{entry.location}</span>
+                  </button>
+                </h3>
 
-                  <div className="mt-5 space-y-2.5">
-                    {entry.highlights.map((highlight, hIdx) => (
-                      <div key={hIdx} className="flex items-start gap-3 text-sm text-muted">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                        <span className="leading-relaxed">{highlight}</span>
+                <AnimatePresence initial={false}>
+                  {open && (
+                    <motion.div
+                      id={panelId}
+                      key={panelId}
+                      initial={reduce ? false : { height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
+                      transition={{ duration: 0.45, ease }}
+                      className="overflow-hidden"
+                    >
+                      <div className="space-y-8 pb-8 md:max-w-2xl">
+                        {entry.roles.map((role) => (
+                          <div key={`${entry.company}-${role.period}`}>
+                            <p className="text-sm text-muted">
+                              {role.role}
+                              <span className="px-2" aria-hidden="true">
+                                ·
+                              </span>
+                              {role.period}
+                            </p>
+                            <p className="mt-2 text-lg leading-relaxed text-foreground">
+                              {role.story}
+                            </p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

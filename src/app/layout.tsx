@@ -1,38 +1,38 @@
 import type { Metadata } from "next";
-import { DM_Sans, Plus_Jakarta_Sans } from "next/font/google";
-import { CustomCursor } from "@/components/effects/CustomCursor";
+import { Newsreader, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const newsreader = Newsreader({
   subsets: ["latin"],
-  variable: "--font-display",
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const sourceSans = Source_Sans_3({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  weight: ["400", "600"],
+  variable: "--font-source",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Arif Hussain — Senior Software Engineer",
+  title: "Arif Hussain — Senior software engineer",
   description:
-    "Senior software engineer building modern, reliable web applications from frontend to backend. Deep expertise in Laravel, JavaScript, APIs, databases, and cloud infrastructure.",
+    "Senior software engineer in Karachi. Laravel, React, and Next.js, from the screen through to the database. Open to senior roles.",
   keywords: [
-    "Senior Software Engineer",
-    "Full Stack Developer",
+    "Arif Hussain",
+    "Senior software engineer",
     "Laravel",
-    "Vue.js",
     "React",
-    "AWS",
+    "Next.js",
     "Karachi",
   ],
   authors: [{ name: "Arif Hussain" }],
   openGraph: {
-    title: "Arif Hussain — Senior Software Engineer",
+    title: "Arif Hussain — Senior software engineer",
     description:
-      "Building modern, reliable web applications from frontend to backend.",
+      "Senior software engineer in Karachi. Laravel, React, and Next.js, from the screen through to the database.",
     type: "website",
   },
 };
@@ -43,12 +43,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${dmSans.variable}`}>
-      <body className="antialiased">
-        <CustomCursor />
-        <div className="noise-overlay" aria-hidden="true" />
-        {children}
-      </body>
+    <html lang="en" className={`${newsreader.variable} ${sourceSans.variable}`}>
+      <body className="antialiased">{children}</body>
     </html>
   );
 }
