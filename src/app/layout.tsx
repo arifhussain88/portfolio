@@ -1,40 +1,55 @@
-import type { Metadata } from "next";
-import { Newsreader, Source_Sans_3 } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const newsreader = Newsreader({
+const geist = Geist({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-newsreader",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const sourceSans = Source_Sans_3({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-source",
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Arif Hussain — Senior software engineer",
   description:
-    "Senior software engineer in Karachi. Laravel, React, and Next.js, from the screen through to the database. Open to senior roles.",
+    "Senior software engineer in Karachi. Laravel, React, Next.js, and React Native, from the screen through to the database. Open to senior roles.",
   keywords: [
     "Arif Hussain",
     "Senior software engineer",
+    "Full-stack",
     "Laravel",
     "React",
     "Next.js",
+    "React Native",
     "Karachi",
   ],
   authors: [{ name: "Arif Hussain" }],
   openGraph: {
     title: "Arif Hussain — Senior software engineer",
     description:
-      "Senior software engineer in Karachi. Laravel, React, and Next.js, from the screen through to the database.",
+      "Senior software engineer in Karachi. Laravel, React, Next.js, and React Native, from the screen through to the database.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0c" },
+  ],
 };
 
 export default function RootLayout({
@@ -43,8 +58,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${newsreader.variable} ${sourceSans.variable}`}>
-      <body className="antialiased">{children}</body>
+    <html
+      lang="en"
+      className={`${geist.variable} ${geistMono.variable} ${instrument.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,94 +1,56 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { experience } from "@/lib/constants";
-
-const ease = [0.16, 1, 0.3, 1] as const;
+import { Reveal, SectionHeading } from "@/components/ui/Reveal";
 
 export function Experience() {
-  const [openCompany, setOpenCompany] = useState<string | null>(null);
-  const reduce = useReducedMotion();
-
   return (
-    <section id="experience" className="border-t border-border">
-      <div className="page-wrap py-24 md:py-32">
-        <div className="max-w-2xl">
-          <h2 className="font-display text-4xl font-medium tracking-tight text-foreground md:text-5xl">
-            Experience
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted">
-            Three companies. Open a name for what the job actually was.
-          </p>
+    <section id="experience" className="page-wrap py-24 md:py-32">
+      <div className="grid gap-12 lg:grid-cols-[20rem_1fr] lg:gap-20">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <SectionHeading
+            eyebrow="Experience"
+            title="Lead roles on systems people use all day."
+            description="CRMs, billing portals, and a SaaS rewrite — owned from the architecture through to production support."
+          />
         </div>
 
-        <div className="mt-12 border-t border-border">
-          {experience.map((entry) => {
-            const open = openCompany === entry.company;
-            const panelId = `${entry.company.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-story`;
-
-            return (
-              <article key={entry.company} className="border-b border-border">
-                <h3>
-                  <button
-                    type="button"
-                    className="group w-full cursor-pointer py-7 text-left md:py-8"
-                    aria-expanded={open}
-                    aria-controls={panelId}
-                    onClick={() => setOpenCompany(open ? null : entry.company)}
-                  >
-                    <span className="flex flex-col gap-3 md:flex-row md:items-baseline md:justify-between md:gap-10">
-                      <span className="font-display text-3xl font-medium tracking-tight text-foreground transition-colors duration-300 group-hover:text-accent md:text-4xl">
-                        {entry.company}
-                      </span>
-                      <span className="shrink-0 text-sm text-muted">{entry.years}</span>
-                    </span>
-                    <span className="mt-2 flex items-baseline justify-between gap-4">
-                      <span className="reading text-lg leading-snug text-foreground">
-                        {entry.summary}
-                      </span>
-                      <span className="shrink-0 text-sm text-accent">
-                        {open ? "Close" : "Read"}
-                      </span>
-                    </span>
-                    <span className="mt-2 block text-sm text-muted">{entry.location}</span>
-                  </button>
+        <ol className="relative border-l border-border">
+          {experience.map((entry, i) => (
+            <Reveal as="li" key={entry.company} delay={i * 0.05} className="relative pb-14 pl-8 last:pb-0 md:pl-12">
+              <span
+                className={`absolute top-1.5 -left-[7px] size-3.5 rounded-full border-2 border-background ${
+                  i === 0 ? "bg-accent" : "bg-border-strong"
+                }`}
+                aria-hidden="true"
+              />
+              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+                <h3 className="text-2xl font-semibold tracking-[-0.025em] text-foreground md:text-3xl">
+                  {entry.company}
                 </h3>
+                <span className="shrink-0 font-mono text-xs text-muted">{entry.years}</span>
+              </div>
+              <p className="mt-1 text-muted">
+                {entry.summary} · {entry.location}
+              </p>
 
-                <AnimatePresence initial={false}>
-                  {open && (
-                    <motion.div
-                      id={panelId}
-                      key={panelId}
-                      initial={reduce ? false : { height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={reduce ? undefined : { height: 0, opacity: 0 }}
-                      transition={{ duration: 0.45, ease }}
-                      className="overflow-hidden"
-                    >
-                      <div className="space-y-8 pb-8 md:max-w-2xl">
-                        {entry.roles.map((role) => (
-                          <div key={`${entry.company}-${role.period}`}>
-                            <p className="text-sm text-muted">
-                              {role.role}
-                              <span className="px-2" aria-hidden="true">
-                                ·
-                              </span>
-                              {role.period}
-                            </p>
-                            <p className="mt-2 text-lg leading-relaxed text-foreground">
-                              {role.story}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </article>
-            );
-          })}
-        </div>
+              <div className="mt-6 space-y-4">
+                {entry.roles.map((role) => (
+                  <div
+                    key={`${entry.company}-${role.period}`}
+                    className="rounded-2xl border border-border bg-surface p-5 md:p-6"
+                  >
+                    <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+                      <p className="font-semibold text-foreground">{role.role}</p>
+                      <p className="shrink-0 text-sm text-muted">{role.period}</p>
+                    </div>
+                    <p className="mt-2 leading-relaxed text-ink-2">{role.story}</p>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          ))}
+        </ol>
       </div>
     </section>
   );

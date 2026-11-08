@@ -1,115 +1,56 @@
-# Arif Hussain — Senior Software Engineer Portfolio
+# Arif Hussain — Portfolio
 
-A modern, high-performance portfolio website built with **Next.js 15 (App Router)**, **React 19**, **Tailwind CSS v4**, **Framer Motion**, and **GSAP**.
+Personal portfolio for Arif Hussain, senior software engineer. Built with **Next.js 15 (App Router, static export)**, **React 19**, **Tailwind CSS v4**, and **Framer Motion**. Light and dark themes follow the visitor's system setting.
 
----
+Live: **https://arifhussain88.github.io/portfolio/**
 
-## ⚡ Quick Start (Run Locally)
+## Run locally
 
-Run these commands in your project root directory:
-
-### 1. Install Dependencies
 ```bash
 npm install
+cp .env.example .env.local   # PowerShell: Copy-Item .env.example .env.local
+npm run dev                  # http://localhost:3000
 ```
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env.local`:
+Set `NEXT_PUBLIC_FORMSPREE_ID` in `.env.local` to your [Formspree](https://formspree.io) form ID for the contact form.
+
+| Command | What it does |
+| :--- | :--- |
+| `npm run dev` | Dev server with Turbopack on `http://localhost:3000` |
+| `npm run build` | Static export into `./out` (used by GitHub Pages) |
+| `npm run lint` | ESLint |
+
+Pushing to `main` builds and deploys to GitHub Pages through `.github/workflows/nextjs.yml`.
+
+## Editing content
+
+All copy lives in [`src/lib/constants.ts`](src/lib/constants.ts):
+
+- `featuredProjects` — the large “Latest work” cards (Chalkback, Northline), with grouped stacks and links
+- `projects` / `sideProjects` — production systems and smaller builds
+- `experience`, `skills`, `heroStats`, `metric` — the remaining sections
+
+## Résumé
+
+The PDF at `public/resume/arif-hussain-resume.pdf` is generated from [`resume/resume.html`](resume/resume.html). After editing the HTML, regenerate it with Edge (or Chrome) in headless mode:
 
 ```bash
-# Windows (PowerShell)
-Copy-Item .env.example .env.local
-
-# Linux / macOS / Git Bash
-cp .env.example .env.local
+"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --no-pdf-header-footer --print-to-pdf="C:\laragon\www\portfolio\public\resume\arif-hussain-resume.pdf" "file:///C:/laragon/www/portfolio/resume/resume.html"
 ```
 
-Add your [Formspree](https://formspree.io) form ID inside `.env.local`:
-```env
-NEXT_PUBLIC_FORMSPREE_ID=moeapqdo
-```
-
-### 3. Start Development Server
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
----
-
-## 📜 All Available Commands
-
-| Command | Purpose | Description |
-| :--- | :--- | :--- |
-| `npm run dev` | **Local Development** | Starts dev server with Turbopack at `http://localhost:3000` |
-| `npm run build` | **Static Export Build** | Builds & exports static production site into `./out` directory |
-| `npm run start` | **Production Server** | Starts local production server |
-| `npm run lint` | **Code Quality** | Runs ESLint type & syntax validation |
-
----
-
-## 🔄 Common Workflows & Troubleshooting
-
-### Clean Cache & Reinstall
-If you ever see build cache issues or Internal Server Errors:
-
-```bash
-# PowerShell
-Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue
-npm run dev
-
-# Bash / Git Bash
-rm -rf .next
-npm run dev
-```
-
-### Test Production Static Export Locally
-```bash
-npm run build
-```
-The static build outputs directly into the `out/` folder (used by GitHub Pages).
-
-### Deploy Updates to Live GitHub Pages
-```bash
-git add .
-git commit -m "Update portfolio content"
-git push origin main
-```
-GitHub Actions will automatically build and deploy the changes to:
-👉 **[https://arifhussain88.github.io/portfolio/](https://arifhussain88.github.io/portfolio/)**
-
----
-
-## 📁 Project Architecture
+## Structure
 
 ```text
-portfolio/
-├── public/                 # Static assets (PDF resume, favicons)
-├── src/
-│   ├── app/                # Next.js App Router (layout, page, global css)
-│   │   ├── globals.css     # Design system tokens & Tailwind v4 theme
-│   │   ├── layout.tsx      # Font configuration (Plus Jakarta Sans, DM Sans)
-│   │   └── page.tsx        # Main single-page portfolio layout
-│   ├── components/
-│   │   ├── effects/        # Custom cursor, scroll progress, visual canvas
-│   │   ├── layout/         # Header & Footer navigation
-│   │   ├── sections/       # Hero, About, Skills, Work, Experience, Contact
-│   │   └── ui/             # MagneticButton, SectionHeading, etc.
-│   └── lib/                # Constants, project case studies, and animations
-├── .env.example            # Environment variables template
-├── .env.local              # Local environment variables
-├── next.config.ts          # Next.js export & basePath config
-├── package.json            # Scripts & project dependencies
-└── tsconfig.json           # TypeScript configuration
+src/
+├── app/
+│   ├── globals.css          # Design tokens (light/dark) and utilities
+│   ├── layout.tsx           # Fonts (Geist, Geist Mono, Instrument Serif) and metadata
+│   ├── page.tsx             # Section order
+│   └── not-found.tsx
+├── components/
+│   ├── layout/Header.tsx    # Floating nav, scroll progress, footer
+│   ├── sections/            # Hero, Work (+ Previews), Metric, Stack, Experience, Contact
+│   └── ui/Reveal.tsx        # Scroll reveal, section heading, icons
+└── lib/                     # Content, types, base-path helper
+public/resume/               # Résumé PDF
 ```
-
----
-
-## 🛠 Tech Stack
-- **Framework:** Next.js 15 (App Router, Turbopack, Static Export)
-- **Language:** TypeScript 5.9
-- **Styling:** Tailwind CSS v4 & Vanilla CSS Variables
-- **Animations:** Framer Motion 12 & GSAP 3 (ScrollTrigger)
-- **Form Handling:** Formspree React SDK
-- **Hosting:** GitHub Pages (Automated CI/CD via GitHub Actions)
