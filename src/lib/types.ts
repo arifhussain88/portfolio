@@ -1,27 +1,69 @@
-export type SkillGroup = {
-  id: string;
+export type ProjectLink = {
   label: string;
-  highlight: string[];
+  href: string;
+};
+
+export type StackGroup = {
+  label: string;
   items: string[];
 };
 
-export type ProjectCaseStudy = {
+/** Which illustrated preview a featured project shows. */
+export type PreviewKind = "northline" | "chalkback";
+
+export type FeaturedProject = {
   id: string;
   name: string;
   period: string;
-  featured: boolean;
-  link: string | null;
-  problem: string;
-  solution: string;
+  kind: string;
+  summary: string;
+  detail: string;
+  highlights: string[];
+  stack: StackGroup[];
+  links: ProjectLink[];
+  preview: PreviewKind;
+  /** How AI tooling was used, and how the output was kept in check. */
+  workflow: {
+    note: string;
+    practices: string[];
+  };
+};
+
+export type Project = {
+  id: string;
+  name: string;
+  period: string;
+  kind: string;
+  summary: string;
+  detail: string;
   technology: string[];
-  result: string;
-  images: string[];
+  links: ProjectLink[];
+};
+
+export type SideProject = {
+  id: string;
+  name: string;
+  period: string;
+  summary: string;
+  technology: string[];
+  href: string | null;
+};
+
+export type ExperienceRole = {
+  role: string;
+  period: string;
+  story: string;
 };
 
 export type ExperienceEntry = {
   company: string;
-  role: string;
   location: string;
-  period: string;
-  highlights: string[];
+  years: string;
+  summary: string;
+  roles: ExperienceRole[];
+};
+
+export type Stat = {
+  value: string;
+  label: string;
 };

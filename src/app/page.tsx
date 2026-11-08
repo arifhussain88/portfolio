@@ -1,24 +1,23 @@
 import { Header, Footer } from "@/components/layout/Header";
-import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import { Hero } from "@/components/sections/Hero";
-import { MetricSection } from "@/components/sections/MetricSection";
-import { About } from "@/components/sections/About";
-import { Skills } from "@/components/sections/Skills";
-import { Work } from "@/components/sections/Work";
+import { Work, MoreWork } from "@/components/sections/Work";
+import { Metric } from "@/components/sections/Metric";
 import { Experience } from "@/components/sections/Experience";
+import { Stack } from "@/components/sections/Stack";
 import { Contact } from "@/components/sections/Contact";
 
 export default function Home() {
   return (
     <>
-      <ScrollProgress />
       <Header />
       <main>
         <Hero />
-        <MetricSection />
-        <About />
-        <Skills />
         <Work />
+        <Metric />
+        <div className="pt-24 md:pt-32">
+          <MoreWork />
+        </div>
+        <Stack />
         <Experience />
         <Contact />
       </main>

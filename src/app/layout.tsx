@@ -1,40 +1,55 @@
-import type { Metadata } from "next";
-import { DM_Sans, Plus_Jakarta_Sans } from "next/font/google";
-import { CustomCursor } from "@/components/effects/CustomCursor";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-geist",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+
+const instrument = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Arif Hussain — Senior Software Engineer",
+  title: "Arif Hussain — Senior software engineer",
   description:
-    "Senior software engineer building modern, reliable web applications from frontend to backend. Deep expertise in Laravel, JavaScript, APIs, databases, and cloud infrastructure.",
+    "Senior software engineer in Karachi. Laravel, React, Next.js, and React Native, from the screen through to the database. Open to senior roles.",
   keywords: [
-    "Senior Software Engineer",
-    "Full Stack Developer",
+    "Arif Hussain",
+    "Senior software engineer",
+    "Full-stack",
     "Laravel",
-    "Vue.js",
     "React",
-    "AWS",
+    "Next.js",
+    "React Native",
     "Karachi",
   ],
   authors: [{ name: "Arif Hussain" }],
   openGraph: {
-    title: "Arif Hussain — Senior Software Engineer",
+    title: "Arif Hussain — Senior software engineer",
     description:
-      "Building modern, reliable web applications from frontend to backend.",
+      "Senior software engineer in Karachi. Laravel, React, Next.js, and React Native, from the screen through to the database.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafaf9" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0b0c" },
+  ],
 };
 
 export default function RootLayout({
@@ -43,12 +58,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${dmSans.variable}`}>
-      <body className="antialiased">
-        <CustomCursor />
-        <div className="noise-overlay" aria-hidden="true" />
-        {children}
-      </body>
+    <html
+      lang="en"
+      className={`${geist.variable} ${geistMono.variable} ${instrument.variable}`}
+    >
+      <body>{children}</body>
     </html>
   );
 }

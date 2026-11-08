@@ -1,161 +1,184 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { navLinks, siteConfig } from "@/lib/constants";
-import { MagneticButton } from "@/components/ui/MagneticButton";
 import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { navLinks, siteConfig } from "@/lib/constants";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState("");
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const ids = navLinks.map((link) => link.href.slice(1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5] },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   return (
-    <motion.header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-border bg-surface/85 backdrop-blur-md shadow-xs py-3.5"
-          : "bg-transparent py-5"
-      }`}
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
-        <a
-          href="#"
-          className="group flex items-center gap-2 font-display text-lg font-bold tracking-tight text-foreground transition-colors"
-        >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-white font-mono text-sm font-bold shadow-xs transition-transform group-hover:scale-105">
+    <header className="fixed inset-x-0 top-0 z-40 px-3 pt-3 md:px-6 md:pt-4">
+      <div
+        className={`mx-auto flex h-14 max-w-[72rem] items-center justify-between rounded-full border px-3 pl-5 transition-all duration-300 ${
+          scrolled || mobileOpen
+            ? "border-border bg-surface/80 shadow-card backdrop-blur-xl"
+            : "border-transparent bg-transparent"
+        }`}
+      >
+        <a href="#top" className="flex items-center gap-2.5 font-semibold tracking-tight text-foreground">
+          <span className="grid size-7 place-items-center rounded-full bg-foreground font-mono text-[0.7rem] text-background">
             AH
           </span>
-          <span className="font-semibold tracking-tight">
-            Arif Hussain<span className="text-accent">.</span>
-          </span>
+          <span className="hidden sm:inline">{siteConfig.name}</span>
         </a>
 
-        <nav className="hidden items-center gap-8 rounded-full border border-border/80 bg-surface/80 px-6 py-2 shadow-xs backdrop-blur-md md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="group relative text-sm font-medium text-muted transition-colors hover:text-foreground"
-            >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all duration-200 group-hover:w-full" />
-            </a>
-          ))}
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Page">
+          {navLinks.map((link) => {
+            const isActive = active === link.href.slice(1);
+            return (
+              <a
+                key={link.href}
+                href={link.href}
+                aria-current={isActive ? "true" : undefined}
+                className={`relative isolate rounded-full px-3.5 py-1.5 text-sm transition-colors ${
+                  isActive ? "text-foreground" : "text-muted hover:text-foreground"
+                }`}
+              >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-surface-2"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                {link.label}
+              </a>
+            );
+          })}
         </nav>
 
-        <div className="hidden items-center gap-4 md:flex">
-          <div className="hidden items-center gap-2 rounded-full border border-emerald-200/80 bg-emerald-50/80 px-3 py-1 text-xs font-medium text-emerald-800 lg:flex">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
+        <div className="flex items-center gap-2">
+          <a
+            href={siteConfig.resumePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform hover:-translate-y-px sm:inline-block"
+          >
+            Résumé
+          </a>
+          <button
+            type="button"
+            className="grid size-10 cursor-pointer place-items-center rounded-full text-foreground md:hidden"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-nav"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          >
+            <span className="relative block h-3 w-5">
+              <span
+                className={`absolute left-0 h-[1.5px] w-5 bg-current transition-all duration-300 ${
+                  mobileOpen ? "top-1.5 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-[1.5px] w-5 bg-current transition-all duration-300 ${
+                  mobileOpen ? "top-1.5 -rotate-45" : "top-3"
+                }`}
+              />
             </span>
-            Available for hire
-          </div>
-          <MagneticButton href="#contact" variant="primary" className="!px-4 !py-2 !text-xs">
-            Contact
-          </MagneticButton>
+          </button>
         </div>
-
-        <button
-          type="button"
-          className="flex flex-col gap-1.5 md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <span
-            className={`block h-0.5 w-6 bg-foreground transition-all ${mobileOpen ? "translate-y-2 rotate-45" : ""}`}
-          />
-          <span
-            className={`block h-0.5 w-6 bg-foreground transition-all ${mobileOpen ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block h-0.5 w-6 bg-foreground transition-all ${mobileOpen ? "-translate-y-2 -rotate-45" : ""}`}
-          />
-        </button>
       </div>
 
-      {mobileOpen && (
-        <motion.nav
-          className="border-t border-border bg-surface px-6 py-6 shadow-lg md:hidden"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-        >
-          <div className="flex flex-col gap-4">
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.nav
+            id="mobile-nav"
+            aria-label="Page"
+            initial={reduce ? false : { opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={reduce ? undefined : { opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="mx-auto mt-2 max-w-[72rem] rounded-3xl border border-border bg-surface p-3 shadow-card-lg md:hidden"
+          >
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-base font-medium text-muted transition-colors hover:text-accent"
+                className="block rounded-2xl px-4 py-3 text-2xl font-semibold tracking-tight text-foreground hover:bg-surface-2"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
               </a>
             ))}
-            <div className="mt-2 flex items-center gap-2 text-xs font-medium text-emerald-700">
-              <span className="relative flex h-2 w-2">
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-600" />
-              </span>
-              Available for senior roles & consulting
-            </div>
-            <MagneticButton href="#contact" variant="primary" className="mt-2 w-full">
-              Get in touch
-            </MagneticButton>
-          </div>
-        </motion.nav>
-      )}
-    </motion.header>
+            <a
+              href={siteConfig.resumePath}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 block rounded-2xl bg-foreground px-4 py-3 text-center font-medium text-background"
+            >
+              Download résumé
+            </a>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        className="fixed inset-x-0 top-0 h-[2px] origin-left bg-accent"
+        style={{ scaleX: reduce ? scrollYProgress : scaleX }}
+        aria-hidden="true"
+      />
+    </header>
   );
 }
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface py-12">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 md:flex-row">
-        <div className="flex flex-col items-center gap-2 md:items-start">
-          <p className="text-sm font-medium text-foreground">
-            © {new Date().getFullYear()} {siteConfig.name} — Senior Software Engineer
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Architected for scalability, speed, and precision. Built with Next.js & TypeScript.
-          </p>
-        </div>
-        <div className="flex items-center gap-6">
-          <a
-            href={siteConfig.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-muted transition-colors hover:text-accent"
-          >
+    <footer className="border-t border-border py-10">
+      <div className="page-wrap flex flex-col gap-4 text-sm text-muted sm:flex-row sm:items-center sm:justify-between">
+        <p>
+          © {new Date().getFullYear()} {siteConfig.name} · {siteConfig.location}
+        </p>
+        <div className="flex gap-5">
+          <a href={siteConfig.github} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
             GitHub
           </a>
-          <a
-            href={siteConfig.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium text-muted transition-colors hover:text-accent"
-          >
+          <a href={siteConfig.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
             LinkedIn
           </a>
-          <a
-            href={siteConfig.resumePath}
-            className="text-sm font-medium text-muted transition-colors hover:text-accent"
-          >
-            Resume (PDF)
+          <a href={siteConfig.resumePath} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">
+            Résumé
           </a>
-          <a
-            href={`mailto:${siteConfig.email}`}
-            className="text-sm font-medium text-accent transition-colors hover:underline"
-          >
-            {siteConfig.email}
+          <a href="#top" className="hover:text-foreground">
+            Back to top ↑
           </a>
         </div>
       </div>

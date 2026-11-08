@@ -2,21 +2,16 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-background px-6 text-center">
-      <span className="font-mono text-xs font-bold uppercase tracking-widest text-accent">
-        404 — System Notice
-      </span>
-      <h1 className="mt-4 font-display text-4xl font-extrabold text-foreground md:text-6xl">
-        Page Not Found
+    <div className="page-wrap flex min-h-screen flex-col justify-center py-24">
+      <p className="eyebrow">404</p>
+      <h1 className="mt-3 text-5xl leading-[1.05] font-semibold tracking-[-0.04em] text-foreground md:text-7xl">
+        This page is <span className="font-serif font-normal text-accent italic">not here.</span>
       </h1>
-      <p className="mt-4 max-w-md text-sm text-muted">
-        The requested URL was not found on this server. Return to the main engineering portfolio.
-      </p>
       <Link
         href="/"
-        className="mt-8 rounded-full bg-accent px-6 py-3 text-xs font-semibold text-white shadow-xs hover:bg-accent-dim transition-colors"
+        className="mt-10 inline-flex w-fit rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background"
       >
-        Back to Home
+        Back to the homepage
       </Link>
     </div>
   );
