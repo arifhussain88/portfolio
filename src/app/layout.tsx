@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     "Karachi",
   ],
   authors: [{ name: "Arif Hussain" }],
+  verification: {
+    google: "An5m1AzKrDK7G-MJ7TwCTCtKwsLvcR5f-bylTFdgg7I",
+  },
   openGraph: {
     title: "Arif Hussain — Senior software engineer",
     description:
