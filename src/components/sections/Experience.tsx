@@ -11,7 +11,7 @@ export function Experience() {
           <SectionHeading
             eyebrow="Experience"
             title="Lead roles on systems people use all day."
-            description="CRMs, billing portals, and a SaaS rewrite — owned from the architecture through to production support."
+            description="SaaS platforms, CRMs, and billing portals — owned from the architecture through to the servers they run on."
           />
         </div>
 
@@ -44,7 +44,14 @@ export function Experience() {
                       <p className="font-semibold text-foreground">{role.role}</p>
                       <p className="shrink-0 text-sm text-muted">{role.period}</p>
                     </div>
-                    <p className="mt-2 leading-relaxed text-ink-2">{role.story}</p>
+                    <ul className="mt-3 space-y-2">
+                      {role.points.map((point) => (
+                        <li key={point} className="flex gap-3 leading-relaxed text-ink-2">
+                          <span className="mt-[0.6rem] size-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>

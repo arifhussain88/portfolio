@@ -2,20 +2,21 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Sayed Arif Hussain - Senior Software Engineer - Resume</title>
+<title>Sayed Arif Hussain - Senior Full-Stack Engineer - Resume</title>
 <meta name="author" content="Sayed Arif Hussain">
 <style>
   /*
    * ATS-friendly layout: one column, real text, standard section names, no tables or images.
    * Margins are baked into each .page (not left to the printer), so every viewer shows them.
+   * Content is split across the two .page sections by hand; keep each page within its height.
    */
   @page { size: A4; margin: 0; }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: #fff; }
   body {
     font-family: Calibri, "Segoe UI", Arial, Helvetica, sans-serif;
-    font-size: 10.5pt;
-    line-height: 1.38;
+    font-size: 10.3pt;
+    line-height: 1.36;
     color: #1f1f1f;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -25,7 +26,7 @@
   .page {
     width: 210mm;
     height: 297mm;
-    padding: 16mm 17mm 15mm;
+    padding: 15mm 17mm 14mm;
     overflow: hidden;
     page-break-after: always;
     break-after: page;
@@ -35,11 +36,11 @@
 
   h1 { margin: 0; font-size: 22pt; line-height: 1.1; font-weight: 700; color: #111; }
   .headline { margin: 3px 0 0; font-size: 11.5pt; font-weight: 700; color: #b8430f; }
-  .contact { margin: 5px 0 0; font-size: 9.8pt; color: #333; }
-  .rule { height: 2px; background: #111; margin: 9px 0 0; }
+  .contact { margin: 4px 0 0; font-size: 9.8pt; color: #333; }
+  .rule { height: 2px; background: #111; margin: 8px 0 0; }
 
   h2 {
-    margin: 14px 0 6px;
+    margin: 12px 0 5px;
     padding-bottom: 2px;
     font-size: 11pt;
     font-weight: 700;
@@ -48,11 +49,12 @@
     color: #111;
     border-bottom: 1px solid #c9c9c9;
   }
+  .page > h2:first-child { margin-top: 0; }
   p { margin: 0; }
   .skills p { margin: 1.5px 0; }
   .skills b { color: #111; }
 
-  .job { margin-top: 9px; }
+  .job { margin-top: 8px; }
   .job:first-of-type { margin-top: 0; }
   .line { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
   .org { font-weight: 700; color: #111; }
@@ -61,6 +63,8 @@
   .tech { margin-top: 1px; font-size: 9.6pt; color: #4a4a4a; }
   ul { margin: 3px 0 0; padding-left: 16px; }
   li { margin: 2px 0; padding-left: 2px; }
+  .projects li { margin: 3px 0; }
+  .nw { white-space: nowrap; }
 </style>
 </head>
 <body>
@@ -68,8 +72,8 @@
 <!-- ===================== PAGE 1 ===================== -->
 <section class="page">
   <h1>Sayed Arif Hussain</h1>
-  <p class="headline">Senior Software Engineer | Full-Stack: Laravel, React, Next.js, React Native</p>
-  <p class="contact">Karachi, Pakistan | +92-308-9130079 | <a href="mailto:sayed.arif2001@gmail.com">sayed.arif2001@gmail.com</a></p>
+  <p class="headline">Senior Full-Stack Engineer | Laravel, React, Next.js</p>
+  <p class="contact">Karachi Division, Sindh, Pakistan | +92-308-9130079 | <a href="mailto:sayed.arif2001@gmail.com">sayed.arif2001@gmail.com</a></p>
   <p class="contact">
     <a href="https://arifhussain88.github.io/portfolio/">arifhussain88.github.io/portfolio</a> |
     <a href="https://linkedin.com/in/sayed-arifhussain">linkedin.com/in/sayed-arifhussain</a> |
@@ -77,56 +81,44 @@
   </p>
   <div class="rule"></div>
 
-  <h2>Summary</h2>
+  <h2>Professional Summary</h2>
   <p>
-    Senior full-stack engineer with deep Laravel experience and recent products in React, Next.js, and React Native.
-    Owns software end to end, from database design and APIs to interfaces, deployment, and production support.
-    Kept a business CRM running smoothly for 1,500+ people using it at the same time, made slow reports load
-    almost instantly (from 50 seconds to a fraction of a second), and made the code easier and cheaper to maintain. Uses AI tools (Claude, Cursor) to ship faster, with code review, testing, and monitoring on every release.
-    Experienced tech lead who mentors engineers and sets technical direction.
+    Senior full-stack engineer and team lead who builds and runs SaaS products end to end, from the database and API to
+    the screens, and keeps them fast in production. Co-built an all-in-one SaaS platform covering CRM, project management,
+    payments and client reporting, sold to client companies, with hands-on ownership of its performance, queues, CI/CD and
+    Linux servers; also designed and built an internal HRM portal end to end. Full-stack across Laravel, Vue.js, React and
+    Next.js, with React Native and Expo on mobile. Works AI-first day to day (Claude Code, Cursor, GitHub Copilot,
+    Antigravity) and has used it to ship new products in 2026: an AI learning app, a Next.js store on Neon Postgres and a
+    React Native game in closed testing on Google Play. Leads small teams of developers and mentors engineers.
   </p>
 
   <h2>Skills</h2>
   <div class="skills">
-    <p><b>Languages:</b> PHP, JavaScript, TypeScript, SQL</p>
-    <p><b>Backend:</b> Laravel, Node.js, REST APIs, Livewire, Filament, Redis queues</p>
-    <p><b>Frontend and Mobile:</b> React, Next.js, Vue.js, React Native, Expo, Tailwind CSS</p>
-    <p><b>Databases:</b> MySQL, PostgreSQL, Redis, MongoDB, Supabase</p>
-    <p><b>Cloud and DevOps:</b> AWS, Linux, NGINX, Vercel, CI/CD pipelines</p>
-    <p><b>Payments:</b> Stripe (3D Secure), Authorize.net, Paytrace, Elavon</p>
-    <p><b>Tools:</b> Git, PHPUnit, Vitest, Sentry, Jira, Claude, Cursor</p>
+    <p><b>Backend:</b> PHP, Laravel, Filament, Livewire, REST APIs, queues and background workers</p>
+    <p><b>Frontend:</b> React, Next.js, Vue.js, TypeScript, Tailwind CSS</p>
+    <p><b>Mobile:</b> React Native, Expo, NativePHP</p>
+    <p><b>Databases and ORMs:</b> MySQL, PostgreSQL (Neon, Supabase), MongoDB, Redis, SQLite, Drizzle ORM</p>
+    <p><b>Cloud and DevOps:</b> AWS (EC2), Oracle Cloud, Vercel, Docker, Linux (AlmaLinux, CentOS, Ubuntu), Apache, NGINX, <span class="nw">PHP-FPM</span>, Supervisor, CI/CD (Bitbucket Pipelines, YAML)</p>
+    <p><b>Payments and Integrations:</b> Stripe (3D Secure), Authorize.net, ThriftyPayments, Maverick Payments, Paytrace, Elavon, RevenueCat, Dialpad</p>
+    <p><b>AI-Assisted Development:</b> Claude Code, Cursor, GitHub Copilot, Antigravity, LLM APIs, agentic development workflows</p>
+    <p><b>Quality and Monitoring:</b> Code review, PHPUnit, Vitest, Sentry, PostHog</p>
+    <p><b>Practices and Tools:</b> Mentoring, Git, Composer, Jira, Agile</p>
+    <p><b>Currently learning:</b> Python, FastAPI, Node.js, NestJS, Express</p>
   </div>
 
-  <h2>Experience</h2>
+  <h2>Work Experience</h2>
 
   <div class="job">
     <div class="line"><span class="org">Meta Frolic Labs (Pvt.) Ltd.</span><span class="when">May 2023 - May 2026</span></div>
     <div class="line"><span class="role">Senior Technology Lead</span><span class="role">Karachi, Pakistan</span></div>
     <ul>
-      <li>Owned architecture and technical direction for a CRM portal (Laravel, Filament, Livewire, MySQL), scaling it to 1,500+ concurrent users with near-zero downtime.</li>
-      <li>Cut a sales report from about 50 seconds to 200 ms by rewriting queries, adding composite indexes, and caching in Redis, enabling real-time dashboards for leadership.</li>
-      <li>Reduced technical debt by 40% through refactoring, standardized error handling, and centralized logging.</li>
-      <li>Introduced Redis queues and background workers, and built the Bitbucket CI/CD pipeline to Linux, Apache, and NGINX servers.</li>
-    </ul>
-  </div>
-
-  <div class="job">
-    <div class="line"><span class="org">Salsoft Technologies (Pvt) Ltd</span><span class="when">Nov 2022 - May 2023</span></div>
-    <div class="line"><span class="role">Senior Technology Lead</span><span class="role">Karachi, Pakistan</span></div>
-    <ul>
-      <li>Core team member on ProjectCamp, a ground-up SaaS rewrite combining project management, sales, billing, and client collaboration.</li>
-      <li>Designed backend services with Laravel APIs, Vue.js, MySQL, and Redis, using Supervisor-managed queues; owned staging and the CentOS to AlmaLinux migration.</li>
-      <li>Built live dashboards, activity notifications, and a searchable platform-wide log for debugging and audits.</li>
-    </ul>
-  </div>
-
-  <div class="job">
-    <div class="line"><span class="org">Salsoft Technologies (Pvt) Ltd</span><span class="when">Jun 2019 - Nov 2022</span></div>
-    <div class="line"><span class="role">Senior PHP Developer / Team Lead</span><span class="role">Karachi, Pakistan</span></div>
-    <ul>
-      <li>Led a billing portal for leads, invoices, and payment links (Laravel, React, MongoDB) integrating Stripe 3D Secure, Authorize.net, Paytrace, and Elavon.</li>
-      <li>Found and fixed a company-wide email spam vulnerability affecting every in-house brand.</li>
-      <li>Built a Stripe client payment portal while leading code reviews and mentoring the team.</li>
+      <li>Co-built ProjectCamp.io, an all-in-one SaaS developed with the implementation team to replace separate tools for production, sales, billing and clients; sold and deployed to two local client companies.</li>
+      <li>ProjectCamp.io scope: CRM for sales, account management and support teams; project and task boards; a customer portal where clients follow their projects' progress, tasks and reports in real time; <span class="nw">CEO-level</span> dashboards; Dialpad telephony, email replies threaded into conversations, real-time notifications and a custom payment module (Stripe, Authorize.net, ThriftyPayments, Maverick Payments).</li>
+      <li>Made slow CRM reports fast with query rewrites, composite indexes and Redis caching, giving leadership dashboards that load in real time.</li>
+      <li>Led a technical-debt cleanup through refactoring, shared error handling and centralized logging; introduced <span class="nw">Redis-backed</span> queues and background workers and built the Bitbucket CI/CD deployment pipeline.</li>
+      <li>Single-handedly migrated ProjectCamp.io's production servers from CentOS 7 to AlmaLinux (2026), with Apache, <span class="nw">PHP-FPM</span> and NGINX as reverse proxy.</li>
+      <li>Led a team of 3-4 developers: mentoring, unblocking bugs and performance issues, and contributing to ProjectCamp.io's architecture decisions with the software architect and PM.</li>
+      <li>Designed and built the company's internal HRM portal with Laravel and Filament, owning its architecture end to end.</li>
     </ul>
   </div>
 </section>
@@ -134,11 +126,31 @@
 <!-- ===================== PAGE 2 ===================== -->
 <section class="page">
   <div class="job">
+    <div class="line"><span class="org">Salsoft Technologies (Pvt) Ltd</span><span class="when">Nov 2022 - May 2023</span></div>
+    <div class="line"><span class="role">Senior Technology Lead</span><span class="role">Karachi, Pakistan</span></div>
+    <ul>
+      <li>Part of the core team that built a legacy portal's replacement from scratch: a SaaS workspace combining billing, project/task management and team collaboration.</li>
+      <li>Built backend services with Laravel APIs, Vue.js, MySQL and Redis, using Supervisor-managed queues for background processing.</li>
+      <li>Built live dashboards and activity-driven notifications, and designed a platform-wide logging system for fast debugging and full auditability.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <div class="line"><span class="org">Salsoft Technologies (Pvt) Ltd</span><span class="when">Jun 2019 - Nov 2022</span></div>
+    <div class="line"><span class="role">Senior PHP Developer / Team Lead</span><span class="role">Karachi, Pakistan</span></div>
+    <ul>
+      <li>Led development and deployment of a billing portal covering lead management, invoicing and <span class="nw">payment-link</span> checkout pages (Laravel, React, MongoDB).</li>
+      <li>Found and fixed the root cause of a company-wide email spam issue affecting every in-house brand, rebuilding the vulnerable systems to close the security gap.</li>
+      <li>Built a Stripe-integrated client payment portal while leading code reviews and mentoring the team.</li>
+    </ul>
+  </div>
+
+  <div class="job">
     <div class="line"><span class="org">PNC Solutions Pakistan</span><span class="when">Nov 2016 - Jun 2019</span></div>
     <div class="line"><span class="role">Senior PHP Developer</span><span class="role">Karachi, Pakistan</span></div>
     <ul>
-      <li>Built a classifieds website and admin portal (CodeIgniter), and a Laravel CRM for a timber supplier covering orders, measurements, and invoicing.</li>
-      <li>Delivered client projects in Laravel and e-commerce sites on OpenCart, WordPress, and Shopify.</li>
+      <li>Built a Laravel-based CRM for a timber and hardware supplier, covering orders, measurements and invoicing.</li>
+      <li>Built and maintained a classified listings platform with its admin portal (CodeIgniter, jQuery), and delivered further client web applications and online stores.</li>
     </ul>
   </div>
 
@@ -146,32 +158,22 @@
     <div class="line"><span class="org">Salsoft Technologies (Pvt) Ltd</span><span class="when">Aug 2013 - Oct 2016</span></div>
     <div class="line"><span class="role">PHP Web Developer</span><span class="role">Karachi, Pakistan</span></div>
     <ul>
-      <li>Built a games website with CRM and social features, a custom CMS, and an online learning portal with video classes, chat, and forums.</li>
+      <li>Built a games website with an integrated CRM and social networking features, a custom CMS for client sites, and an online learning portal for teachers and students.</li>
     </ul>
   </div>
 
   <h2>Projects</h2>
-
-  <div class="job">
-    <div class="line"><span class="org">Chalkback - AI learning app (mobile and web)</span><span class="when">2026</span></div>
-    <p class="tech">React Native, Expo, Supabase, LLM APIs, RevenueCat, Stripe, Sentry | chalkback.vercel.app</p>
-    <ul>
-      <li>Users teach a YouTube video back to two AI students who question the gaps; answers are checked against the transcript.</li>
-      <li>Designed and built with Claude for rapid development, with every change reviewed and production monitored in Sentry and PostHog.</li>
-    </ul>
-  </div>
-
-  <div class="job">
-    <div class="line"><span class="org">Northline - E-commerce store</span><span class="when">2026</span></div>
-    <p class="tech">Next.js, React, TypeScript, Drizzle ORM, Neon Postgres, Vitest, Vercel | northline-revamp.vercel.app</p>
-    <ul>
-      <li>Store with search, guest cart, account checkout, and order history; API routes covered by Vitest.</li>
-      <li>Designed and built with Cursor for rapid development, with every change reviewed and tests passing before each deploy.</li>
-    </ul>
-  </div>
+  <ul class="projects">
+    <li><b>Chalkback (2026)</b> - AI learning app: paste a YouTube video, then teach it back to two AI students who ask about what you missed; answers are checked against the transcript. React Native, Expo, Supabase, LLM APIs, RevenueCat and Stripe, Sentry, PostHog; Next.js landing page on Vercel. Built with Claude Code. chalkback.vercel.app</li>
+    <li><b>Northline (2026)</b> - E-commerce store from catalog to checkout: search, guest cart, account checkout and order history. Next.js 16, React 19, Tailwind CSS v4, Server Actions, Drizzle ORM on Neon Postgres, Zod, Vitest; Vercel. Built with Cursor. northline-revamp.vercel.app</li>
+    <li><b>Mobile game (2026)</b> - React Native game deployed on Oracle Cloud, in closed testing on the Google Play Store. Built with AI-assisted, agentic development.</li>
+    <li><b>ZenTracker (2026)</b> - Native mobile habit and mood tracker with a weekly chart (Laravel 12, NativePHP, SQLite). github.com/arifhussain88/ZenTracker</li>
+    <li><b>Translation service (2026)</b> - Translation API with tags, ETag caching and <span class="nw">rate-limited</span> export (Laravel 11, MySQL). github.com/arifhussain88/tms</li>
+    <li><b>KALM (2023-2024)</b> - Booking platform for electricians, plumbers and maintenance services in Karachi (Laravel). kalm.pk</li>
+  </ul>
 
   <h2>Education</h2>
-  <div class="line"><span class="org">Mehran University of Engineering and Technology, Jamshoro</span><span class="when">2008 - 2011</span></div>
+  <div class="line"><span class="org">Mehran University of Engineering and Technology, Jamshoro</span><span class="when">Jan 2008 - Dec 2011</span></div>
   <p class="role">Bachelor of Engineering, Computer Systems Engineering</p>
 </section>
 

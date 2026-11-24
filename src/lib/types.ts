@@ -29,9 +29,34 @@ export type FeaturedProject = {
   };
 };
 
+/** The main production system, shown as a wide card with its scope. */
+export type FlagshipProject = {
+  id: string;
+  name: string;
+  company: string;
+  period: string;
+  kind: string;
+  summary: string;
+  detail: string;
+  scope: string[];
+  facts: Stat[];
+  stack: StackGroup[];
+  links: ProjectLink[];
+  screens: Screenshot[];
+};
+
+export type Screenshot = {
+  src: string;
+  title: string;
+  caption: string;
+  width: number;
+  height: number;
+};
+
 export type Project = {
   id: string;
   name: string;
+  company: string;
   period: string;
   kind: string;
   summary: string;
@@ -52,7 +77,7 @@ export type SideProject = {
 export type ExperienceRole = {
   role: string;
   period: string;
-  story: string;
+  points: string[];
 };
 
 export type ExperienceEntry = {

@@ -23,27 +23,28 @@ const instrument = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "Arif Hussain — Senior software engineer",
+  title: "Arif Hussain — Senior full-stack engineer",
   description:
-    "Senior software engineer in Karachi. Laravel, React, Next.js, and React Native, from the screen through to the database. Open to senior roles.",
+    "Senior full-stack engineer and team lead in Karachi. Builds and runs SaaS products end to end in Laravel, Vue.js, React, and Next.js, with React Native on mobile. Open to senior roles.",
   keywords: [
     "Arif Hussain",
-    "Senior software engineer",
-    "Full-stack",
+    "Sayed Arif Hussain",
+    "Senior full-stack engineer",
     "Laravel",
+    "Vue.js",
     "React",
     "Next.js",
     "React Native",
     "Karachi",
   ],
-  authors: [{ name: "Arif Hussain" }],
+  authors: [{ name: "Sayed Arif Hussain" }],
   verification: {
     google: "An5m1AzKrDK7G-MJ7TwCTCtKwsLvcR5f-bylTFdgg7I",
   },
   openGraph: {
-    title: "Arif Hussain — Senior software engineer",
+    title: "Arif Hussain — Senior full-stack engineer",
     description:
-      "Senior software engineer in Karachi. Laravel, React, Next.js, and React Native, from the screen through to the database.",
+      "Senior full-stack engineer and team lead in Karachi. Laravel, Vue.js, React, Next.js, and React Native.",
     type: "website",
   },
 };

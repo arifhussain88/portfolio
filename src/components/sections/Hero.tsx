@@ -60,10 +60,9 @@ export function Hero() {
           {...fade(0.35)}
           className="mt-8 max-w-2xl text-lg leading-relaxed text-ink-2 md:text-xl"
         >
-          I&apos;m {siteConfig.name}, a senior full-stack engineer in Karachi. I design the
-          database, write the API, and build the screens — Laravel, React, and Next.js on the web,
-          React Native on mobile — then stay on to keep it fast. One sales report went from 50
-          seconds to 200 milliseconds.
+          I&apos;m {siteConfig.name}, a senior full-stack engineer and team lead in Karachi. I
+          build and run SaaS products end to end — database, API, and screens — in Laravel, Vue.js,
+          React, and Next.js, with React Native on mobile, and keep them fast in production.
         </motion.p>
 
         <motion.div {...fade(0.5)} className="mt-10 flex flex-wrap items-center gap-3">
